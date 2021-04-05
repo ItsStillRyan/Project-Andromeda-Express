@@ -1,0 +1,25 @@
+{
+  "name": "project-andromeda-express",
+  "version": "1.0.0",
+  "description": "![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ItsStillRyan/Project-Andromeda-Express.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ItsStillRyan/Project-Andromeda-Express/issues"
+  },
+  "homepage": "https://github.com/ItsStillRyan/Project-Andromeda-Express#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "hbs": "^4.1.1",
+    "wax-on": "^1.2.2"
+  }
+}
