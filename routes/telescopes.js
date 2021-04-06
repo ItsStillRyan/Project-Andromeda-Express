@@ -13,13 +13,13 @@ router.get('/telescope', async (req,res)=>{
 })
 
 //telescope forms 
+//create
 router.get('/telescope/create', async (req,res)=>{
     const telescopeForm = createTelescopeForm()
     res.render('telescopes/create',{
         'form':telescopeForm.toHTML(bootstrapField)
     })
 })
-
 router.post('/telescope/create', async (req,res)=>{
     const telescopeForm = createTelescopeForm()
     telescopeForm.handle(req, {
@@ -37,6 +37,7 @@ router.post('/telescope/create', async (req,res)=>{
     })
 })
 
+//update
 router.get('/telescope/:telescope_id/update', async (req,res)=>{
     const telescopeId = req.params.telescope_id
     const telescope = await Telescope.where({
@@ -63,6 +64,49 @@ router.get('/telescope/:telescope_id/update', async (req,res)=>{
         'telescope':telescope.toJSON()
     })
 })
+router.post('/telescope/:telescope_id/update', async (req,res) => {
+    const telescope = await Telescope.where({
+        'id': req.params.telescope_id
+    }).fetch({
+        require: true
+    })
 
+    const telescopeForm = createTelescopeForm()
+
+    telescopeForm.handle(req, {
+        'success': async (form) => {
+            telescope.set(form.data)
+            await telescope.save()
+            res.redirect('/telescope')
+        },
+        'error': async (form) => {
+            res.render('telescope/update', {
+                'form':form.toHTML(bootstrapField)
+            })
+        }
+    })
+})
+
+//delete
+router.get('/telescope/:telescope_id/delete', async(req,res)=>{
+    const telescope = await Telescope.where({
+        'id': req.params.telescope_id
+    }).fetch({
+        require: true
+    })
+
+    res.render('telescopes/delete',{
+        'telescope': telescope
+    })
+})
+router.post('/telescope/:telescope_id/delete', async(req,res)=>{
+    const telescope = await Telescope.where({
+        'id': req.params.telescope_id
+    }).fetch({
+        require: true
+    })
+    await telescope.destroy()
+    res.redirect('/telescope')
+})
 
 module.exports = router
