@@ -17,9 +17,13 @@
   },
   "homepage": "https://github.com/ItsStillRyan/Project-Andromeda-Express#readme",
   "dependencies": {
+    "bookshelf": "^1.2.0",
+    "db-migrate": "^0.11.12",
+    "db-migrate-mysql": "^2.1.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "hbs": "^4.1.1",
+    "knex": "^0.95.4",
     "wax-on": "^1.2.2"
   }
 }

@@ -1,0 +1,36 @@
+{{#extends 'base'}}
+{{#block 'content'}}
+<table class="table">
+    <thread>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Stock</th>
+            <th>Price</th>
+            <th>Weight</th>
+            <th>User Level</th>
+            <th>Imaging Type</th>
+            <th>Optical</th>
+            <th>Aperture</th>
+            <th>f/Ratio</th>
+        </tr>
+    </thread>
+    <tbody>
+        {{#each telescopes}}
+        <tr>
+            <td>{{this.name}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.stock}}</td>
+            <td>{{this.price}}</td>
+            <td>{{this.weight}}</td>
+            <td>{{this.userLevel}}</td>
+            <td>{{this.imagingType}}</td>
+            <td>{{this.opticalDesign}}</td>
+            <td>{{this.apertureRange}}</td>
+            <td>{{this.fratioRange}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{/block}}
+{{/extends}}

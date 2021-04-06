@@ -24,9 +24,9 @@ app.use(
 );
 
 async function main() {
-  app.get('/', (req,res)=>{
-      res.send("test1")
-  })
+
+    const telescopeList = require('./routes/telescopes')
+    app.use('/',telescopeList)
 }
 
 main();
