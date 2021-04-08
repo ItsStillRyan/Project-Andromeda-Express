@@ -39,7 +39,7 @@ const createTelescopeForm = (categories, brands) => {
                 label: ['form-label']
             }
         }),
-        'brand_id': fields.string({
+        'brands_id': fields.string({
             label: 'Brand',
             required: true,
             errorAfterField: true,

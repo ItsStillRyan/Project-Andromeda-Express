@@ -2,7 +2,12 @@
 {{#block 'content'}}
 <form method="POST">
     {{{form}}}
-    <input type="submit" value="Add Telescope Listing" class="btn btn-primary"/>
+    <input type="submit" value="Add Telescope Listing" class="btn btn-primary" />
+    <input type="hidden" role="uploadcare-uploader" data-public-key="{{UPLOADCARE_PUBLIC_KEY}}"/>
 </form>
 {{/block}}
 {{/extends}}
+
+{{#block js}}
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+{{/block}}

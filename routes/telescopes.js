@@ -4,10 +4,11 @@ const router = express.Router()
 const {Telescope, Category, Brand} = require("../models")
 
 const {bootstrapField, createTelescopeForm} = require('../forms')
+
 //rendering full product list
 router.get('/telescope', async (req,res)=>{
     let telescopes = await Telescope.collection().fetch({
-        withRelated:['category']
+        withRelated:['brand', 'category']
     })
     res.render('telescopes/index', {
         'telescopes':telescopes.toJSON()
@@ -21,21 +22,23 @@ router.get('/telescope/create', async (req,res)=>{
     const allCate = await Category.fetchAll().map((category) => {
         return [category.get('id'), category.get('name')]
     })
-    const allBrands = await Brand.fetchAll().map((brand) => {
-        return [brand.get('id'), brand.get('name')]
+    const allBrands = await Brand.fetchAll().map((brands)=>{
+        return [brands.get('id'), brands.get('name')]
     })
 
     const telescopeForm = createTelescopeForm(allCate, allBrands)
+
     res.render('telescopes/create',{
-        'form':telescopeForm.toHTML(bootstrapField)
+        'form':telescopeForm.toHTML(bootstrapField),
+        UPLOADCARE_PUBLIC_KEY:process.env.UPLOADCARE_PUBLIC_KEY
     })
 })
 router.post('/telescope/create', async (req,res)=>{
     const allCate = await Category.fetchAll().map((category) => {
         return [category.get('id'), category.get('name')]
     })
-    const allBrands = await Brand.fetchAll().map((brand) => {
-        return [brand.get('id'), brand.get('name')]
+    const allBrands = await Brand.fetchAll().map((brands) => {
+        return [brands.get('id'), brands.get('name')]
     })
 
     const telescopeForm = createTelescopeForm(allCate, allBrands)
@@ -44,6 +47,7 @@ router.post('/telescope/create', async (req,res)=>{
         'success': async (form) => {
             const telescope = new Telescope()
             telescope.set(form.data)
+            console.log(telescope)
             await telescope.save()
             res.redirect('/telescope')
         },
@@ -84,7 +88,7 @@ router.get('/telescope/:telescope_id/update', async (req,res)=>{
     telescopeForm.fields.apertureRange.value = telescope.get('apertureRange')
     telescopeForm.fields.fratioRange.value = telescope.get('fratioRange')
     telescopeForm.fields.category_id.value = telescope.get('category_id')
-    telescopeForm.fields.brand_id.value = telescope.get('brand_id')
+    telescopeForm.fields.brands_id.value = telescope.get('brands_id')
 
 
     res.render('telescopes/update', {
