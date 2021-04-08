@@ -4,7 +4,9 @@
     <thread>
         <tr>
             <th>Name</th>
+            <th>Category</th>
             <th>Description</th>
+            <th>Brand</th>
             <th>Stock</th>
             <th>Price</th>
             <th>Weight</th>
@@ -19,7 +21,9 @@
         {{#each telescopes}}
         <tr>
             <td>{{this.name}}</td>
+            <td>{{this.category.name}}</td>
             <td>{{this.description}}</td>
+            <td>{{this.brand.name}}</td>
             <td>{{this.stock}}</td>
             <td>{{this.price}}</td>
             <td>{{this.weight}}</td>

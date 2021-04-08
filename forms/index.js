@@ -23,7 +23,7 @@ var bootstrapField = function (name, object) {
     return '<div class="form-group">' + label + widget + error + '</div>';
 };
 
-const createTelescopeForm = () => {
+const createTelescopeForm = (categories, brands) => {
     return forms.create({
         'name': fields.string({
             required: true,
@@ -37,7 +37,17 @@ const createTelescopeForm = () => {
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
+            }
+        }),
+        'brand_id': fields.string({
+            label: 'Brand',
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
             },
+            widget: widgets.select(),
+            choices: brands
         }),
         'stock': fields.number({
             required: true,
@@ -45,7 +55,7 @@ const createTelescopeForm = () => {
             cssClasses: {
                 label: ['form-label']
             },
-            'validators':[validators.integer()]
+            'validators': [validators.integer()]
         }),
         'price': fields.number({
             required: true,
@@ -53,7 +63,7 @@ const createTelescopeForm = () => {
             cssClasses: {
                 label: ['form-label']
             },
-            'validators':[validators.integer()]
+            'validators': [validators.integer()]
         }),
         'weight': fields.number({
             required: true,
@@ -61,7 +71,7 @@ const createTelescopeForm = () => {
             cssClasses: {
                 label: ['form-label']
             },
-            'validators':[validators.integer()]
+            'validators': [validators.integer()]
         }),
         'userLevel': fields.string({
             required: true,
@@ -99,9 +109,17 @@ const createTelescopeForm = () => {
                 label: ['form-label']
             }
         }),
-        
-        
+        'category_id': fields.string({
+            label: 'Category',
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: categories
+        })
     })
 }
 
-module.exports = {bootstrapField, createTelescopeForm}
+module.exports = { bootstrapField, createTelescopeForm }

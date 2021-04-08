@@ -14,4 +14,11 @@ const Category = bookshelf.model('Category',{
     }
 })
 
-module.exports = {Telescope, Category}
+const Brand = bookshelf.model('Brand',{
+    tableName: 'brands',
+    brand(){
+        return this.hasMane('Telescope')
+    }
+})
+
+module.exports = {Telescope, Category, Brand}
