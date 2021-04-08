@@ -1,7 +1,17 @@
 const bookshelf = require('../bookshelf')
 
 const Telescope = bookshelf.model('Telescope', {
-    tableName:'telescopes'
+    tableName:'telescopes',
+    category(){
+        return this.belongsTo('Category')
+    }
 })
 
-module.exports = {Telescope}
+const Category = bookshelf.model('Category',{
+    tableName: 'categories',
+    telescope(){
+        return this.hasMany('Telescope')
+    }
+})
+
+module.exports = {Telescope, Category}
