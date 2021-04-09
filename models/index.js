@@ -39,6 +39,8 @@ const UserDetails = bookshelf.model('UserDetails', {
 })
 
 //ORDERS RELATIONSHIPS
+const Order = bookshelf.model('Order', {
+    tableName:'orders'
+})
 
-
-module.exports = {Telescope, Category, Brand, User, UserDetails}
+module.exports = {Telescope, Category, Brand, User, UserDetails, Order}
