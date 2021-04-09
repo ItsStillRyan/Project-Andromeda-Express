@@ -26,8 +26,19 @@ const Brand = bookshelf.model('Brand', {
 
 //USER RELATIONSHIPS
 const User = bookshelf.model('User', {
-    tableName: 'users'
+    tableName: 'users',
+    userdetails(){
+        return this.belongsTo('UserDetails')
+    }
+})
+const UserDetails = bookshelf.model('UserDetails', {
+    tableName: 'userDetails',
+    user() {
+        return this.hasOne('User')
+    }
 })
 
+//ORDERS RELATIONSHIPS
 
-module.exports = {Telescope, Category, Brand, User}
+
+module.exports = {Telescope, Category, Brand, User, UserDetails}

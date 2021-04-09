@@ -15,19 +15,24 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('userDetails', {
-      id: {type:'int', unsigned:true, primaryKey:true, autoIncrement:true},
-      fname: {type: 'string', length: 100},
-      lName: {type: 'string', length: 100},
-      contact: {type: 'int'},
-      email: {type: 'string'},
-      address: {type: 'string'},
-      postalCode: {type: 'int'},
+  return db.addColumn('users', 'userDetail_id',{
+      type: 'int',
+      unsigned: true,
+      notNull: true,
+      foreignKey: {
+          name: 'user_userDetails_fk',
+          table: 'userDetails',
+          rules:{
+              onDelete: 'cascade',
+              onUpdate: 'restrict'
+          },
+          mapping: 'id'
+      }
   })
 };
 
 exports.down = function(db) {
-  return db.dropTable('userDetails')
+  return null;
 };
 
 exports._meta = {
