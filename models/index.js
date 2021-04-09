@@ -8,6 +8,7 @@ const Telescope = bookshelf.model('Telescope', {
     brand(){
         return this.belongsTo('Brand')
     }
+
 })
 
 const Category = bookshelf.model('Category',{
@@ -17,12 +18,13 @@ const Category = bookshelf.model('Category',{
     }
 })
 
-const Brand = bookshelf.model('Brand',{
+const Brand = bookshelf.model('Brand', {
     tableName: 'brands',
     telescope(){
         return this.hasMany('Telescope')
     }
 })
+
 
 
 module.exports = {Telescope, Category, Brand}

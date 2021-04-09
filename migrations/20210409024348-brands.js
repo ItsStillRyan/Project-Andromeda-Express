@@ -15,24 +15,14 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.addColumn('telescopes','brands_id',{
-      type: 'int',
-      unsigned: true,
-      notNull: true,
-      foreignKey:{
-          name: 'telescope_brands_fk',
-          table: 'brands',
-          rules:{
-              onDelete:'cascade',
-              onUpdate:'restrict'
-          },
-          mapping: 'id'
-      }
+  return db.createTable('brands',{
+      id:{ type: 'int', unsigned: true, primaryKey:true, autoIncrement: true},
+      name: { type: 'string', length: 100}
   })
 };
 
 exports.down = function(db) {
-  return null;
+  return db.dropTable('brands')
 };
 
 exports._meta = {

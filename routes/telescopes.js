@@ -1,44 +1,46 @@
 const express = require("express");
 const router = express.Router()
 
-const {Telescope, Category, Brand} = require("../models")
+const { Telescope, Category, Brand } = require("../models")
 
-const {bootstrapField, createTelescopeForm} = require('../forms')
+const { bootstrapField, createTelescopeForm } = require('../forms')
 
 //rendering full product list
-router.get('/telescope', async (req,res)=>{
+router.get('/telescope', async (req, res) => {
     let telescopes = await Telescope.collection().fetch({
-        withRelated:['brand', 'category']
+        withRelated: ['category', 'brand']
     })
+    console.log(telescopes.toJSON())
+
     res.render('telescopes/index', {
-        'telescopes':telescopes.toJSON()
+        'telescopes': telescopes.toJSON()
     })
 })
 
 //telescope forms 
 //create
-router.get('/telescope/create', async (req,res)=>{
+router.get('/telescope/create', async (req, res) => {
 
     const allCate = await Category.fetchAll().map((category) => {
         return [category.get('id'), category.get('name')]
     })
-    const allBrands = await Brand.fetchAll().map((brands)=>{
-        return [brands.get('id'), brands.get('name')]
+    const allBrands = await Brand.fetchAll().map((brand) => {
+        return [brand.get('id'), brand.get('name')]
     })
 
-    const telescopeForm = createTelescopeForm(allCate, allBrands)
+    const telescopeForm = createTelescopeForm(allCate,allBrands)
 
-    res.render('telescopes/create',{
-        'form':telescopeForm.toHTML(bootstrapField),
-        UPLOADCARE_PUBLIC_KEY:process.env.UPLOADCARE_PUBLIC_KEY
+    res.render('telescopes/create', {
+        'form': telescopeForm.toHTML(bootstrapField),
+        UPLOADCARE_PUBLIC_KEY: process.env.UPLOADCARE_PUBLIC_KEY
     })
 })
-router.post('/telescope/create', async (req,res)=>{
+router.post('/telescope/create', async (req, res) => {
     const allCate = await Category.fetchAll().map((category) => {
         return [category.get('id'), category.get('name')]
     })
-    const allBrands = await Brand.fetchAll().map((brands) => {
-        return [brands.get('id'), brands.get('name')]
+    const allBrands = await Brand.fetchAll().map((brand) => {
+        return [brand.get('id'), brand.get('name')]
     })
 
     const telescopeForm = createTelescopeForm(allCate, allBrands)
@@ -47,7 +49,6 @@ router.post('/telescope/create', async (req,res)=>{
         'success': async (form) => {
             const telescope = new Telescope()
             telescope.set(form.data)
-            console.log(telescope)
             await telescope.save()
             res.redirect('/telescope')
         },
@@ -60,12 +61,12 @@ router.post('/telescope/create', async (req,res)=>{
 })
 
 //update
-router.get('/telescope/:telescope_id/update', async (req,res)=>{
+router.get('/telescope/:telescope_id/update', async (req, res) => {
     const telescopeId = req.params.telescope_id
     const telescope = await Telescope.where({
-        'id':telescopeId
+        'id': telescopeId
     }).fetch({
-        require:true
+        require: true
     })
     const allCate = await Category.fetchAll().map((category) => {
         return [category.get('id'), category.get('name')]
@@ -73,7 +74,7 @@ router.get('/telescope/:telescope_id/update', async (req,res)=>{
     const allBrands = await Brand.fetchAll().map((brand) => {
         return [brand.get('id'), brand.get('name')]
     })
-    
+
 
     const telescopeForm = createTelescopeForm(allCate, allBrands)
 
@@ -88,15 +89,15 @@ router.get('/telescope/:telescope_id/update', async (req,res)=>{
     telescopeForm.fields.apertureRange.value = telescope.get('apertureRange')
     telescopeForm.fields.fratioRange.value = telescope.get('fratioRange')
     telescopeForm.fields.category_id.value = telescope.get('category_id')
-    telescopeForm.fields.brands_id.value = telescope.get('brands_id')
+    telescopeForm.fields.brand_id.value = telescope.get('brand_id')
 
 
     res.render('telescopes/update', {
         'form': telescopeForm.toHTML(bootstrapField),
-        'telescope':telescope.toJSON()
+        'telescope': telescope.toJSON()
     })
 })
-router.post('/telescope/:telescope_id/update', async (req,res) => {
+router.post('/telescope/:telescope_id/update', async (req, res) => {
     const telescope = await Telescope.where({
         'id': req.params.telescope_id
     }).fetch({
@@ -109,6 +110,7 @@ router.post('/telescope/:telescope_id/update', async (req,res) => {
         return [brand.get('id'), brand.get('name')]
     })
 
+
     const telescopeForm = createTelescopeForm(allCate, allBrands)
 
     telescopeForm.handle(req, {
@@ -119,25 +121,25 @@ router.post('/telescope/:telescope_id/update', async (req,res) => {
         },
         'error': async (form) => {
             res.render('telescope/update', {
-                'form':form.toHTML(bootstrapField)
+                'form': form.toHTML(bootstrapField)
             })
         }
     })
 })
 
 //delete
-router.get('/telescope/:telescope_id/delete', async(req,res)=>{
+router.get('/telescope/:telescope_id/delete', async (req, res) => {
     const telescope = await Telescope.where({
         'id': req.params.telescope_id
     }).fetch({
         require: true
     })
 
-    res.render('telescopes/delete',{
+    res.render('telescopes/delete', {
         'telescope': telescope
     })
 })
-router.post('/telescope/:telescope_id/delete', async(req,res)=>{
+router.post('/telescope/:telescope_id/delete', async (req, res) => {
     const telescope = await Telescope.where({
         'id': req.params.telescope_id
     }).fetch({
