@@ -10,8 +10,6 @@ router.get('/telescope', async (req, res) => {
     let telescopes = await Telescope.collection().fetch({
         withRelated: ['category', 'brand']
     })
-    console.log(telescopes.toJSON())
-
     res.render('telescopes/index', {
         'telescopes': telescopes.toJSON()
     })

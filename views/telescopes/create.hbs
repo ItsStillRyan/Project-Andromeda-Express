@@ -3,11 +3,27 @@
 <form method="POST">
     {{{form}}}
     <input type="submit" value="Add Telescope Listing" class="btn btn-primary" />
-    <input type="hidden" role="uploadcare-uploader" data-public-key="{{UPLOADCARE_PUBLIC_KEY}}"/>
+    <input type="hidden" role="uploadcare-uploader" data-public-key="{{UPLOADCARE_PUBLIC_KEY}}" />
 </form>
 {{/block}}
 {{/extends}}
 
 {{#block js}}
 <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+<script>
+    (function (src, cb) {
+        var s = document.createElement('script'); s.setAttribute('src', src);
+        s.onload = cb; (document.head || document.body).appendChild(s);
+    })('https://ucarecdn.com/libs/blinkloader/3.x/blinkloader.min.js', function () {
+        window.Blinkloader.optimize({
+            pubkey: '183eee4d9cd149ef9e70',
+            fadeIn: true,
+            lazyload: true,
+            smartCompression: true,
+            responsive: true,
+            retina: true,
+            webp: true
+        });
+    })
+</script>
 {{/block}}

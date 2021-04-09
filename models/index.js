@@ -1,5 +1,6 @@
 const bookshelf = require('../bookshelf')
 
+//TELESCOPES RELATIONSHIPS
 const Telescope = bookshelf.model('Telescope', {
     tableName:'telescopes',
     category(){
@@ -10,14 +11,12 @@ const Telescope = bookshelf.model('Telescope', {
     }
 
 })
-
 const Category = bookshelf.model('Category',{
     tableName: 'categories',
     telescope(){
         return this.hasMany('Telescope')
     }
 })
-
 const Brand = bookshelf.model('Brand', {
     tableName: 'brands',
     telescope(){
@@ -25,6 +24,10 @@ const Brand = bookshelf.model('Brand', {
     }
 })
 
+//USER RELATIONSHIPS
+const User = bookshelf.model('User', {
+    tableName: 'users'
+})
 
 
-module.exports = {Telescope, Category, Brand}
+module.exports = {Telescope, Category, Brand, User}
