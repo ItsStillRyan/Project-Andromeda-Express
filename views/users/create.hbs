@@ -1,8 +1,25 @@
+
 {{#extends 'base'}}
 {{#block 'content'}}
 <form method="POST">
-    {{{form}}}
-    <input type="submit" value="Register" class="btn btn-primary"/>
+    <div id="form1" style="display: block;">
+        {{{form}}}
+        <a class="btn btn-primary" id="nextbtn">Next</a>
+    </div>
+    
+    <div id="form2" style="display: none;">
+        {{{form2}}}
+        <input type="submit" value="Register" class="btn btn-primary"/>
+    </div>
 </form>
 {{/block}}
 {{/extends}}
+
+{{#block 'js'}}
+<script>
+    document.querySelector("#nextbtn").addEventListener("click", () => {
+        document.querySelector("#form2").style.display = "block";
+        document.querySelector("#form1").style.display = "none";
+    })
+</script>
+{{/block}}

@@ -158,6 +158,57 @@ const createRegisterForm = () => {
     })
 }
 
+const createRegister2Form = () => {
+    return forms.create({
+        'fname': fields.string({
+            label:'First Name',
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'lname': fields.string({
+            label:'Last Name',
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'contact': fields.number({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            'validators': [validators.integer()]
+        }),
+        'email': fields.string({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'address': fields.string({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'postalCode': fields.number({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            'validators': [validators.integer()]
+        }),
+    })
+}
+
 const createLoginForm = () => {
     return forms.create({
         'username': fields.string({
@@ -177,4 +228,4 @@ const createLoginForm = () => {
     })
 }
 
-module.exports = { bootstrapField, createTelescopeForm, createRegisterForm, createLoginForm }
+module.exports = { bootstrapField, createTelescopeForm, createRegisterForm, createRegister2Form,createLoginForm }
