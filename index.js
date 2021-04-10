@@ -3,6 +3,7 @@ const hbs = require("hbs");
 const wax = require("wax-on");
 require("dotenv").config();
 const session = require('express-session')
+const flash = require('connect-flash')
 
 // create an instance of express app
 let app = express();
@@ -23,6 +24,14 @@ app.use(session({
     saveUninitialized: true
 }))
 
+app.use(flash())
+
+app.use(function (req, res, next) {
+    res.locals.success_messages = req.flash("success_messages")
+    res.locals.error_messages = req.flash("error_messages")
+    next()
+})
+
 // enable forms
 app.use(
   express.urlencoded({
@@ -31,10 +40,13 @@ app.use(
 );
 
 async function main() {
-    const telescopeList = require('./routes/telescopes')
-    const users = require('./routes/users')
-    app.use('/', telescopeList)
-    app.use('/users', users)
+    const dashboardRoute = require('./routes/dashboard')
+    const telescopeRoute = require('./routes/telescopes')
+    const usersRoute = require('./routes/users')
+    
+    app.use('/', dashboardRoute)
+    app.use('/', telescopeRoute)
+    app.use('/users', usersRoute)
 }
 
 main();

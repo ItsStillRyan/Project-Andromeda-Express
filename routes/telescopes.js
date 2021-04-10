@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router()
+const flash = require('connect-flash')
 
 const { Telescope, Category, Brand } = require("../models")
 
@@ -47,12 +48,15 @@ router.post('/telescope/create', async (req, res) => {
             const telescope = new Telescope()
             telescope.set(form.data)
             await telescope.save()
+            req.flash("success_messages", `${telescope.get('name')} added into Store`)
             res.redirect('/telescope')
         },
         'error': async (form) => {
             res.render('telescopes/create', {
                 'form': form.toHTML(bootstrapField)
             })
+            req.flash("error_messages", 'Review form again.')
+
         }
     })
 })
@@ -114,12 +118,15 @@ router.post('/telescope/:telescope_id/update', async (req, res) => {
         'success': async (form) => {
             telescope.set(form.data)
             await telescope.save()
+            req.flash("success_messages", `${telescope.get('name')} updated into Store`)
             res.redirect('/telescope')
         },
         'error': async (form) => {
             res.render('telescope/update', {
                 'form': form.toHTML(bootstrapField)
             })
+            req.flash("error_messages", 'Review form again.')
+
         }
     })
 })
@@ -143,6 +150,7 @@ router.post('/telescope/:telescope_id/delete', async (req, res) => {
         require: true
     })
     await telescope.destroy()
+    req.flash("success_messages", `${telescope.get('name')} deleted!`)
     res.redirect('/telescope')
 })
 
