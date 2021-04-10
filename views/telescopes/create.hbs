@@ -3,18 +3,21 @@
 <form method="POST">
     {{{form}}}
     <input type="submit" value="Add Telescope Listing" class="btn btn-primary" id="create" />
-    <input type="hidden" role="uploadcare-uploader" id="uploadcare" value="Create" data-public-key="{{UPLOADCARE_PUBLIC_KEY}}" />
+    <input type="hidden" role="uploadcare-uploader" id="uploadcare" value="" />
+
 </form>
 {{/block}}
 {{/extends}}
 
 {{#block js}}
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
 <script>
+    UPLOADCARE_PUBLIC_KEY = '183eee4d9cd149ef9e70';
+
     document.querySelector("#create").addEventListener("click", () => {
-        document.querySelector("#image_id").value = document.querySelector("#uploadcare").value
-        console.log(document.querySelector("#id_image").value)
+        document.querySelector("#id_image_url").value = document.querySelector("#uploadcare").value
     })
 </script>
+
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 {{/block}}

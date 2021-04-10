@@ -119,15 +119,15 @@ const createTelescopeForm = (categories, brands) => {
             widget: widgets.select(),
             choices: categories
         }),
-        // 'image_url': fields.string({
-        //     label: 'Image',
-        //     required:true,
-        //     errorAfterField: true,
-        //     cssClasses:{
-        //         label: ['form-label']
-        //     },
-        //     widget: widgets.hidden()
-        // })
+        'image_url': fields.string({
+            label: 'Image',
+            required:true,
+            errorAfterField: true,
+            cssClasses:{
+                label: ['form-label']
+            },
+            widget: widgets.hidden()
+        })
     })
 }
 

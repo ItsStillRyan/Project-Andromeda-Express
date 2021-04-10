@@ -14,42 +14,7 @@
 </head>
 
 <body>
-    {{!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Poster Store</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/posters">Posters <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/users/profile">Profile</a>
-                </li>
-                 <li class="nav-item">
-                    <a class="nav-link" href="/cart">Shopping Cart</a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    {{#if user}}
-                    <span style="color: white;" class="ml-3 mr-3 my-2 my-lg-0"> Hi, {{user.username}}</span>
-                    <a href="/users/logout" class="ml-3 btn btn-primary btn-sm">Log out</a>
-                    {{else}}
-                    <span style="color: white;" class="ml-3 mr-3 my-2 my-lg-0"> Hi, Stranger</span>
-                    <a href="users/login" class"ml-3 btn btn-primary btn-sm">Log In</a>
-                    {{/if}}
-                </li>
-            </ul>
-        </div>
-    </nav> --}}
 
     <section class="container">
         {{#block 'content'}}{{/block}}

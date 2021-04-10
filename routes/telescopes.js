@@ -30,7 +30,6 @@ router.get('/telescope/create', async (req, res) => {
 
     res.render('telescopes/create', {
         'form': telescopeForm.toHTML(bootstrapField),
-        UPLOADCARE_PUBLIC_KEY: process.env.UPLOADCARE_PUBLIC_KEY
     })
 })
 router.post('/telescope/create', async (req, res) => {
