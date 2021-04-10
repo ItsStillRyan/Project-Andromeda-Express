@@ -15,7 +15,20 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return null;
+  return db.addColumn('orders', 'status_id',{
+      type: 'int',
+      unsigned: true,
+      notNull: true,
+      foreignKey: {
+          name: 'orders_status_fk',
+          table: 'status',
+          rules:{
+              onDelete: 'cascade',
+              onUpdate: 'restrict'
+          },
+          mapping: 'id'
+      }
+  })
 };
 
 exports.down = function(db) {

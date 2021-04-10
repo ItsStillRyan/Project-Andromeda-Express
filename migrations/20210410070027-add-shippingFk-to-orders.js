@@ -15,10 +15,19 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('shippings', {
-      id:{type:'int', primaryKey: true, autoIncrement:true},
-      shipCompany: {type: 'string', length:100},
-      shipDate:{type:'datetime'}
+  return db.addColumn('orders', 'shipping_id',{
+      type: 'int',
+      unsigned: true,
+      notNull: true,
+      foreignKey: {
+          name: 'orders_shipping_fk',
+          table: 'shipping',
+          rules:{
+              onDelete: 'cascade',
+              onUpdate: 'restrict'
+          },
+          mapping: 'id'
+      }
   })
 };
 

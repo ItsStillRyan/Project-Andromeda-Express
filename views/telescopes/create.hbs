@@ -2,28 +2,19 @@
 {{#block 'content'}}
 <form method="POST">
     {{{form}}}
-    <input type="submit" value="Add Telescope Listing" class="btn btn-primary" />
-    <input type="hidden" role="uploadcare-uploader" data-public-key="{{UPLOADCARE_PUBLIC_KEY}}" />
+    <input type="submit" value="Add Telescope Listing" class="btn btn-primary" id="create" />
+    <input type="hidden" role="uploadcare-uploader" id="uploadcare" value="Create" data-public-key="{{UPLOADCARE_PUBLIC_KEY}}" />
 </form>
 {{/block}}
 {{/extends}}
 
 {{#block js}}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 <script>
-    (function (src, cb) {
-        var s = document.createElement('script'); s.setAttribute('src', src);
-        s.onload = cb; (document.head || document.body).appendChild(s);
-    })('https://ucarecdn.com/libs/blinkloader/3.x/blinkloader.min.js', function () {
-        window.Blinkloader.optimize({
-            pubkey: '183eee4d9cd149ef9e70',
-            fadeIn: true,
-            lazyload: true,
-            smartCompression: true,
-            responsive: true,
-            retina: true,
-            webp: true
-        });
+    document.querySelector("#create").addEventListener("click", () => {
+        document.querySelector("#image_id").value = document.querySelector("#uploadcare").value
+        console.log(document.querySelector("#id_image").value)
     })
 </script>
 {{/block}}

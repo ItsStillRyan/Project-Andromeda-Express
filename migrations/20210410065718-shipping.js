@@ -15,14 +15,15 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('status', {
-      id: {type: 'int', primaryKey:true, autoIncrement:true},
-      statusName: {type: 'string', length: 30}
+  return db.createTable('shipping', {
+      id: {type:'int', unsigned: true, primaryKey: true, autoIncrement:true},
+      name: {type: 'string', length:100},
+      shippedDate: {type: 'datetime'}
   })
 };
 
 exports.down = function(db) {
-  return db.dropTable('status')
+  return db.dropTable('shipping');
 };
 
 exports._meta = {
