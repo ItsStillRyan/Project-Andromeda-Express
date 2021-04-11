@@ -4,42 +4,94 @@ const flash = require('connect-flash')
 
 const { Telescope, Category, Brand } = require("../models")
 
-const { bootstrapField, createTelescopeForm } = require('../forms')
+const { bootstrapField, createTelescopeForm, createSearchForm } = require('../forms')
+
+const { checkIfAuthenticated } = require('../middlewares')
+
+const dal = require('../dal/telescopes')
 
 //rendering full product list
-router.get('/telescope', async (req, res) => {
-    let telescopes = await Telescope.collection().fetch({
-        withRelated: ['category', 'brand']
-    })
-    res.render('telescopes/index', {
-        'telescopes': telescopes.toJSON()
+// router.get('/', checkIfAuthenticated, async (req, res) => {
+//     let telescopes = await Telescope.collection().fetch({
+//         withRelated: ['category', 'brand']
+//     })
+//     res.render('telescopes/index', {
+//         'telescopes': telescopes.toJSON()
+//     })
+// })
+
+router.get('/', checkIfAuthenticated, async (req,res) => {
+    const allCate = await dal.getAllCate
+    const allBrands = await dal.getAllBrands
+    let searchForm = createSearchForm(allCate, allBrands)
+    let tele = Telescope.collection()
+    searchForm.handle(req, {
+        'empty': async (form) => {
+            let telescopes = await tele.fetch({
+                withRelated: ['category', 'brand']
+            })
+            res.render('telescopes/index', {
+                'telescopes': telescopes.toJSON(),
+                'form' : form.toHTML(bootstrapField)
+            })
+        },
+        'error': async (form) => {
+            let telescopes = await tele.fetch({
+                withRelated: ['category', 'brand']
+            })
+            res.render('telescopes/index', {
+                'telescopes': telescopes.toJSON(),
+                'form' : form.toHTML(bootstrapField)
+            })
+        },
+        'success': async (form) => {
+            if (form.data.name) {
+                tele = tele.where('name', 'like', '%' + req.query.name + '%')
+            }
+            if (form.data.min_stock) {
+                tele = tele.where('stock', '>=',req.query.min_stock)
+            }
+            if (form.data.max_stock) {
+                tele = tele.where('stock', '<=', req.query.max_stock)
+            }
+            if (form.data.min_price) {
+                tele = tele.where('price', '>=',req.query.min_price)
+            }
+            if (form.data.max_price) {
+                tele = tele.where('price', '<=', req.query.max_price)
+            }
+            if (form.data.category_id) {
+                q = q.query('join', 'categories', 'category_id', 'categories.id')
+                  .where('categories.name', 'like', '%' + req.query.category + '%')
+            }
+
+            let telescopes = await tele.fetch({
+                withRelated: ['category', 'brand']
+            })
+            res.render('telescopes/index', {
+                'telescopes': telescopes.toJSON(),
+                'form' : form.toHTML(bootstrapField)
+            })
+        }
     })
 })
 
 //telescope forms 
 //create
-router.get('/telescope/create', async (req, res) => {
+router.get('/create', checkIfAuthenticated, async (req, res) => {
 
-    const allCate = await Category.fetchAll().map((category) => {
-        return [category.get('id'), category.get('name')]
-    })
-    const allBrands = await Brand.fetchAll().map((brand) => {
-        return [brand.get('id'), brand.get('name')]
-    })
+    const allCate = await dal.getAllCate
+    const allBrands = await dal.getAllBrands
 
-    const telescopeForm = createTelescopeForm(allCate,allBrands)
+    const telescopeForm = createTelescopeForm(allCate, allBrands)
 
     res.render('telescopes/create', {
         'form': telescopeForm.toHTML(bootstrapField),
     })
 })
-router.post('/telescope/create', async (req, res) => {
-    const allCate = await Category.fetchAll().map((category) => {
-        return [category.get('id'), category.get('name')]
-    })
-    const allBrands = await Brand.fetchAll().map((brand) => {
-        return [brand.get('id'), brand.get('name')]
-    })
+router.post('/create', checkIfAuthenticated, async (req, res) => {
+    const allCate = await dal.getAllCate
+    const allBrands = await dal.getAllBrands
 
     const telescopeForm = createTelescopeForm(allCate, allBrands)
 
@@ -62,19 +114,11 @@ router.post('/telescope/create', async (req, res) => {
 })
 
 //update
-router.get('/telescope/:telescope_id/update', async (req, res) => {
+router.get('/:telescope_id/update', async (req, res) => {
     const telescopeId = req.params.telescope_id
-    const telescope = await Telescope.where({
-        'id': telescopeId
-    }).fetch({
-        require: true
-    })
-    const allCate = await Category.fetchAll().map((category) => {
-        return [category.get('id'), category.get('name')]
-    })
-    const allBrands = await Brand.fetchAll().map((brand) => {
-        return [brand.get('id'), brand.get('name')]
-    })
+    const telescope = await dal.getTeleId
+    const allCate = await dal.getAllCate
+    const allBrands = await dal.getAllBrands
 
 
     const telescopeForm = createTelescopeForm(allCate, allBrands)
@@ -98,19 +142,10 @@ router.get('/telescope/:telescope_id/update', async (req, res) => {
         'telescope': telescope.toJSON()
     })
 })
-router.post('/telescope/:telescope_id/update', async (req, res) => {
-    const telescope = await Telescope.where({
-        'id': req.params.telescope_id
-    }).fetch({
-        require: true
-    })
-    const allCate = await Category.fetchAll().map((category) => {
-        return [category.get('id'), category.get('name')]
-    })
-    const allBrands = await Brand.fetchAll().map((brand) => {
-        return [brand.get('id'), brand.get('name')]
-    })
-
+router.post('/:telescope_id/update', async (req, res) => {
+    const telescope = await dal.getTeleId
+    const allCate = await dal.getAllCate
+    const allBrands = await dal.getAllBrands
 
     const telescopeForm = createTelescopeForm(allCate, allBrands)
 
@@ -132,23 +167,14 @@ router.post('/telescope/:telescope_id/update', async (req, res) => {
 })
 
 //delete
-router.get('/telescope/:telescope_id/delete', async (req, res) => {
-    const telescope = await Telescope.where({
-        'id': req.params.telescope_id
-    }).fetch({
-        require: true
-    })
-
+router.get('/:telescope_id/delete', async (req, res) => {
+    const telescope = await dal.getTeleId
     res.render('telescopes/delete', {
         'telescope': telescope
     })
 })
-router.post('/telescope/:telescope_id/delete', async (req, res) => {
-    const telescope = await Telescope.where({
-        'id': req.params.telescope_id
-    }).fetch({
-        require: true
-    })
+router.post('/:telescope_id/delete', async (req, res) => {
+    const telescope = await dal.getTeleId
     await telescope.destroy()
     req.flash("success_messages", `${telescope.get('name')} deleted!`)
     res.redirect('/telescope')

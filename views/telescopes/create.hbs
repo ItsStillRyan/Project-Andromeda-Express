@@ -1,6 +1,7 @@
 {{#extends 'base'}}
 {{#block 'content'}}
 <form method="POST">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
     {{{form}}}
     <input type="submit" value="Add Telescope Listing" class="btn btn-primary" id="create" />
     <input type="hidden" role="uploadcare-uploader" id="uploadcare" value="" />

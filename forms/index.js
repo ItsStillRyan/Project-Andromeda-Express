@@ -155,6 +155,14 @@ const createRegisterForm = () => {
             },
             validators: [validators.matchField('password')]
         }),
+        'userDetail_id': fields.number({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+
+        }),
     })
 }
 
@@ -228,4 +236,52 @@ const createLoginForm = () => {
     })
 }
 
-module.exports = { bootstrapField, createTelescopeForm, createRegisterForm, createRegister2Form,createLoginForm }
+const createSearchForm = (categories, brands) => {
+    return forms.create({
+        'name': fields.string({
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+        }),
+        'max_stock': fields.number({
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            'validators': [validators.integer()]
+        }),
+        'min_stock': fields.number({
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            'validators': [validators.integer()]
+        }),
+        'max_price': fields.number({
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            'validators': [validators.integer()]
+        }),
+        'min_price': fields.number({
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            'validators': [validators.integer()]
+        }),
+        'category_id': fields.string({
+            label: 'Category',
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: categories
+        }),
+    })
+}
+
+module.exports = { bootstrapField, createTelescopeForm, createRegisterForm, createRegister2Form, createLoginForm, createSearchForm }

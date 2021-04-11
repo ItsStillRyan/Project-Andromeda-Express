@@ -7,6 +7,9 @@ const { User, UserDetails } = require('../models')
 
 const { bootstrapField, createRegisterForm, createRegister2Form, createLoginForm } = require('../forms')
 
+const { checkIfAuthenticated } = require('../middlewares')
+
+
 const getHashedPassword = (password) => {
     const sha256 = crypto.createHash('sha256')
     const hash = sha256.update(password).digest('base64')
@@ -24,41 +27,45 @@ router.get('/register', (req, res) => {
 router.post('/register', (req, res) => {
     const registerForm = createRegisterForm()
     const registerForm2 = createRegister2Form()
-    // registerForm.handle(req, {
-    //     'success': async (form) => {
-    //         const user = new User({
-    //             'username': form.data.username,
-    //             'password': getHashedPassword(form.data.password)
-    //         })
-    //         await user.save()
-    //         req.flash("success_messages", 'User Successfully Registered')
-    //         res.redirect('/users/login')
-    //     },
-    //     'error': async (form) => {
-    //         res.render('users/create', {
-    //             'form': form.toHTML(bootstrapField)
-    //         })
-    //         req.flash("error_messages", 'Invalid Entry')
-    //     }
-    // })
-    registerForm2.handle(req, {
+    registerForm.handle(req, {
         'success': async (form) => {
-            const userdetails = new UserDetails({
-                'fname': form.data.fname,
-                'lname': form.data.lname,
-                'contact': form.data.contact,
-                'email': form.data.email,
-                'address': form.data.address,
-                'postalCode': form.data.postalCode,
+            const user = new User({
+                'username': form.data.username,
+                'password': getHashedPassword(form.data.password),
+                'userDetail_id': form.data.userDetail_id
             })
-            await userdetails.save()
+            console.log(form.data)
+            await user.save()
+            req.flash("success_messages", 'User Successfully Registered')
+            res.redirect('/users/login')
         },
         'error': async (form) => {
             res.render('users/create', {
                 'form': form.toHTML(bootstrapField)
             })
+            req.flash("error_messages", 'Invalid Entry')
         }
     })
+    // registerForm2.handle(req, {
+    //     'success': (form) => {
+    //         const userdetails = new UserDetails({
+    //             'fname': form.data.fname,
+    //             'lname': form.data.lname,
+    //             'contact': form.data.contact,
+    //             'email': form.data.email,
+    //             'address': form.data.address,
+    //             'postalCode': form.data.postalCode,
+    //         })
+    //         userdetails.save()
+    //         console.log(form.data)
+    //     },
+    //     'error': async (form) => {
+    //         res.render('users/create', {
+    //             'form': form.toHTML(bootstrapField)
+    //         })
+    //     }
+    // })
+
 
 })
 
@@ -104,7 +111,7 @@ router.post('/login', (req, res) => {
     })
 })
 
-router.get('/profile', (req, res) => {
+router.get('/profile', checkIfAuthenticated, (req, res) => {
     const user = req.session.user
     if (!user) {
         res.redirect('/users/login')
@@ -115,7 +122,7 @@ router.get('/profile', (req, res) => {
     }
 })
 
-router.get('/logout', (req, res) => {
+router.get('/logout', checkIfAuthenticated, (req, res) => {
     req.session.user = null;
     req.flash("success_messages", "Successfully Logged out")
     res.redirect('/users/login')
