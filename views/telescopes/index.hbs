@@ -1,5 +1,7 @@
 {{#extends 'base'}}
 {{#block 'content'}}
+<h1>Telescope Inventory</h1>
+<a class="btn btn-primary" href="/telescope/create">Create New Listing</a>
 {{!-- <table class="table">
     <thread>
         <tr>
@@ -36,7 +38,7 @@
             <td>{{this.apertureRange}}</td>
             <td>{{this.fratioRange}}</td>
             <td>
-                <a href="/telescope/{{this.id}}/update" class="btn btn-info">Update</a>
+                <a href="/telescope/{{this.id}}/update" class="btn btn-warning">Update</a>
             </td>
             <td>
                 <a href="/telescope/{{this.id}}/delete" class="btn btn-danger">Delete</a>
@@ -78,12 +80,10 @@
         <img class="card-img-top" src={{this.image_url}} alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">{{this.name}}</h5>
-            <p class="card-text">{{this.stock}}</p>
-            <a href="/telescope/{{this.id}}/update" class="btn btn-info">More Info</a>
-        </div>
-        <div class="card-body">
+            <p class="card-text">In Stock: {{this.stock}}</p>
             <a href="/telescope/{{this.id}}/update" class="btn btn-warning">Update</a>
             <a href="/telescope/{{this.id}}/delete" class="btn btn-danger">Delete</a>
+            <a href="/telescope/{{this.id}}/detailed" class="btn btn-info">Details</a>
         </div>
     </div>
     {{/each}}

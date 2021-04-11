@@ -10,19 +10,42 @@ const { checkIfAuthenticated } = require('../middlewares')
 
 const dal = require('../dal/telescopes')
 
-//rendering full product list
-// router.get('/', checkIfAuthenticated, async (req, res) => {
-//     let telescopes = await Telescope.collection().fetch({
-//         withRelated: ['category', 'brand']
-//     })
-//     res.render('telescopes/index', {
-//         'telescopes': telescopes.toJSON()
-//     })
-// })
+// rendering full product list
+router.get('/:telescope_id/detailed', checkIfAuthenticated, async (req, res) => {
+    const telescopeId = req.params.telescope_id
+    const telescope = await dal.getTeleId(telescopeId)
+    const allCate = await dal.getAllCate()
+    const allBrands = await dal.getAllBrands()
+
+
+    const telescopeForm = createTelescopeForm(allCate, allBrands)
+
+    telescopeForm.fields.name.value = telescope.get('name')
+    telescopeForm.fields.description.value = telescope.get('description')
+    telescopeForm.fields.stock.value = telescope.get('stock')
+    telescopeForm.fields.price.value = telescope.get('price')
+    telescopeForm.fields.weight.value = telescope.get('weight')
+    telescopeForm.fields.userLevel.value = telescope.get('userLevel')
+    telescopeForm.fields.imagingType.value = telescope.get('imagingType')
+    telescopeForm.fields.opticalDesign.value = telescope.get('opticalDesign')
+    telescopeForm.fields.apertureRange.value = telescope.get('apertureRange')
+    telescopeForm.fields.fratioRange.value = telescope.get('fratioRange')
+    telescopeForm.fields.category_id.value = telescope.get('category_id')
+    telescopeForm.fields.brand_id.value = telescope.get('brand_id')
+    telescopeForm.fields.image_url.value = telescope.get('image_url')
+
+    let telescopes = await Telescope.collection().fetch({
+        withRelated: ['category', 'brand']
+    })
+    res.render('telescopes/detailed', {
+        'telescopes': telescopes.toJSON(),
+        'form' : form.toHTML(bootstrapField)
+    })
+})
 
 router.get('/', checkIfAuthenticated, async (req,res) => {
-    const allCate = await dal.getAllCate
-    const allBrands = await dal.getAllBrands
+    const allCate = await dal.getAllCate()
+    const allBrands = await dal.getAllBrands()
     let searchForm = createSearchForm(allCate, allBrands)
     let tele = Telescope.collection()
     searchForm.handle(req, {
@@ -61,8 +84,8 @@ router.get('/', checkIfAuthenticated, async (req,res) => {
                 tele = tele.where('price', '<=', req.query.max_price)
             }
             if (form.data.category_id) {
-                q = q.query('join', 'categories', 'category_id', 'categories.id')
-                  .where('categories.name', 'like', '%' + req.query.category + '%')
+                tele = tele.query('join', 'categories', 'category_id', 'categories.id')
+                  .where('categories.id', 'like', '%' + req.query.category_id + '%')
             }
 
             let telescopes = await tele.fetch({
@@ -80,8 +103,8 @@ router.get('/', checkIfAuthenticated, async (req,res) => {
 //create
 router.get('/create', checkIfAuthenticated, async (req, res) => {
 
-    const allCate = await dal.getAllCate
-    const allBrands = await dal.getAllBrands
+    const allCate = await dal.getAllCate()
+    const allBrands = await dal.getAllBrands()
 
     const telescopeForm = createTelescopeForm(allCate, allBrands)
 
@@ -90,8 +113,8 @@ router.get('/create', checkIfAuthenticated, async (req, res) => {
     })
 })
 router.post('/create', checkIfAuthenticated, async (req, res) => {
-    const allCate = await dal.getAllCate
-    const allBrands = await dal.getAllBrands
+    const allCate = await dal.getAllCate()
+    const allBrands = await dal.getAllBrands()
 
     const telescopeForm = createTelescopeForm(allCate, allBrands)
 
@@ -116,9 +139,9 @@ router.post('/create', checkIfAuthenticated, async (req, res) => {
 //update
 router.get('/:telescope_id/update', async (req, res) => {
     const telescopeId = req.params.telescope_id
-    const telescope = await dal.getTeleId
-    const allCate = await dal.getAllCate
-    const allBrands = await dal.getAllBrands
+    const telescope = await dal.getTeleId(telescopeId)
+    const allCate = await dal.getAllCate()
+    const allBrands = await dal.getAllBrands()
 
 
     const telescopeForm = createTelescopeForm(allCate, allBrands)
@@ -135,6 +158,7 @@ router.get('/:telescope_id/update', async (req, res) => {
     telescopeForm.fields.fratioRange.value = telescope.get('fratioRange')
     telescopeForm.fields.category_id.value = telescope.get('category_id')
     telescopeForm.fields.brand_id.value = telescope.get('brand_id')
+    telescopeForm.fields.image_url.value = telescope.get('image_url')
 
 
     res.render('telescopes/update', {
@@ -143,9 +167,10 @@ router.get('/:telescope_id/update', async (req, res) => {
     })
 })
 router.post('/:telescope_id/update', async (req, res) => {
-    const telescope = await dal.getTeleId
-    const allCate = await dal.getAllCate
-    const allBrands = await dal.getAllBrands
+    const telescopeId = req.params.telescope_id
+    const telescope = await dal.getTeleId(telescopeId)
+    const allCate = await dal.getAllCate()
+    const allBrands = await dal.getAllBrands()
 
     const telescopeForm = createTelescopeForm(allCate, allBrands)
 
@@ -157,7 +182,7 @@ router.post('/:telescope_id/update', async (req, res) => {
             res.redirect('/telescope')
         },
         'error': async (form) => {
-            res.render('telescope/update', {
+            res.render('telescopes/update', {
                 'form': form.toHTML(bootstrapField)
             })
             req.flash("error_messages", 'Review form again.')
@@ -168,13 +193,15 @@ router.post('/:telescope_id/update', async (req, res) => {
 
 //delete
 router.get('/:telescope_id/delete', async (req, res) => {
-    const telescope = await dal.getTeleId
+    const telescopeId = req.params.telescope_id
+    const telescope = await dal.getTeleId(telescopeId)
     res.render('telescopes/delete', {
         'telescope': telescope
     })
 })
 router.post('/:telescope_id/delete', async (req, res) => {
-    const telescope = await dal.getTeleId
+    const telescopeId = req.params.telescope_id
+    const telescope = await dal.getTeleId(telescopeId)
     await telescope.destroy()
     req.flash("success_messages", `${telescope.get('name')} deleted!`)
     res.redirect('/telescope')

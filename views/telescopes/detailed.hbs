@@ -2,5 +2,7 @@
 {{#block 'content'}}
 <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
 
+<img src="{{this.telescope.image_url}}" id="uploadcare" style="height: 400px;">
+<h1>{{this.name}}</h1>
 {{/block}}
 {{/extends}}

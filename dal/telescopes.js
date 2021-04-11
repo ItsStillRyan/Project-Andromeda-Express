@@ -1,22 +1,23 @@
 const { Telescope, Category, Brand } = require("../models")
 
 const getAllCate = async () => {
-    const allCate = await Category.fetchAll().map((category) => {
+    return await Category.fetchAll().map((category) => {
         return [category.get('id'), category.get('name')]
     })
 }
 
 const getAllBrands = async () => {
-    const allBrands = await Brand.fetchAll().map((brand) => {
+    return await Brand.fetchAll().map((brand) => {
         return [brand.get('id'), brand.get('name')]
     })
 }
 
-const getTeleId = async () => {
-    const telescope = await Telescope.where({
-        'id': req.params.telescope_id
+const getTeleId = async (telescope_id) => {
+    return await Telescope.where({
+        'id': parseInt(telescope_id)
     }).fetch({
-        require: true
+        require: true,
+        withRelated: ['category', 'brand']
     })
 }
 

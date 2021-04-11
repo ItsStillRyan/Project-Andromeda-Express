@@ -63,7 +63,7 @@ async function main() {
     const usersRoute = require('./routes/users')
     
     app.use('/dashboard', dashboardRoute)
-    app.use('/telescopes', telescopeRoute)
+    app.use('/telescope', telescopeRoute)
     app.use('/users', usersRoute)
 }
 
