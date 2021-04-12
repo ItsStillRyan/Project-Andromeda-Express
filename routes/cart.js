@@ -17,8 +17,8 @@ router.get('/', async(req,res)=>{
 router.get('/:telescope_id/add', async (req,res) => {
     let cart = new CartService(req.session.user.id)
     cart.addToCart(req.params.telescope_id, 1)
-    res.flash("success_messages", 'Added to cart')
-    res.redirect('/telescopes')
+    // res.flash("success_messages", 'Added to cart')
+    res.redirect('/telescope')
 })
 
 

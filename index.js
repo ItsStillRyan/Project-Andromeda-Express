@@ -26,13 +26,6 @@ app.use(session({
     saveUninitialized: true
 }))
 
-
-//GLOBAL MIDDLEWARE
-app.use(function(req,res,next){
-    res.locals.user = req.session.user
-    next()
-})
-
 //FLASH
 app.use(flash())
 app.use(function (req, res, next) {
@@ -40,6 +33,14 @@ app.use(function (req, res, next) {
     res.locals.error_messages = req.flash("error_messages")
     next()
 })
+
+
+//GLOBAL MIDDLEWARE
+app.use(function(req,res,next){
+    res.locals.user = req.session.user
+    next()
+})
+
 
 //FORMS
 app.use(

@@ -12,7 +12,7 @@ class CartService {
 
         if(!cartItem) {
             cartItem = new Cart({
-                'user_id': this.user_id,
+                'users_id': this.users_id,
                 'telescope_id': telescopeId,
                 'quantity': quantity
             })
