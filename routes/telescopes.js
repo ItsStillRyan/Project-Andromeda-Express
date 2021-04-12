@@ -11,37 +11,23 @@ const { checkIfAuthenticated } = require('../middlewares')
 const dal = require('../dal/telescopes')
 
 // rendering full product list
-router.get('/:telescope_id/detailed', checkIfAuthenticated, async (req, res) => {
-    const telescopeId = req.params.telescope_id
-    const telescope = await dal.getTeleId(telescopeId)
-    const allCate = await dal.getAllCate()
-    const allBrands = await dal.getAllBrands()
+// router.get('/:telescope_id/detailed', checkIfAuthenticated, async (req, res) => {
+//     const telescopeId = req.params.telescope_id
+//     const telescope = await dal.getTeleId(telescopeId)
+//     const allCate = await dal.getAllCate()
+//     const allBrands = await dal.getAllBrands()
 
 
-    const telescopeForm = createTelescopeForm(allCate, allBrands)
+//     const telescope = new Telescope()
+//     telescope.set(form.data)
 
-    telescopeForm.fields.name.value = telescope.get('name')
-    telescopeForm.fields.description.value = telescope.get('description')
-    telescopeForm.fields.stock.value = telescope.get('stock')
-    telescopeForm.fields.price.value = telescope.get('price')
-    telescopeForm.fields.weight.value = telescope.get('weight')
-    telescopeForm.fields.userLevel.value = telescope.get('userLevel')
-    telescopeForm.fields.imagingType.value = telescope.get('imagingType')
-    telescopeForm.fields.opticalDesign.value = telescope.get('opticalDesign')
-    telescopeForm.fields.apertureRange.value = telescope.get('apertureRange')
-    telescopeForm.fields.fratioRange.value = telescope.get('fratioRange')
-    telescopeForm.fields.category_id.value = telescope.get('category_id')
-    telescopeForm.fields.brand_id.value = telescope.get('brand_id')
-    telescopeForm.fields.image_url.value = telescope.get('image_url')
-
-    let telescopes = await Telescope.collection().fetch({
-        withRelated: ['category', 'brand']
-    })
-    res.render('telescopes/detailed', {
-        'telescopes': telescopes.toJSON(),
-        'form' : form.toHTML(bootstrapField)
-    })
-})
+//     let telescopes = await Telescope.collection().fetch({
+//         withRelated: ['category', 'brand']
+//     })
+//     res.render('telescopes/detailed', {
+//         'telescopes': telescopes.toJSON(),
+//     })
+// })
 
 router.get('/', checkIfAuthenticated, async (req,res) => {
     const allCate = await dal.getAllCate()

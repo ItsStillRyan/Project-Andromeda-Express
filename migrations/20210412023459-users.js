@@ -18,14 +18,19 @@ exports.up = function(db) {
   return db.createTable('users', {
       id: {type: 'int', primaryKey:true, autoIncrement:true},
       username: {type: 'string', length:100},
-      password: {type: 'string', length:80}
+      password: {type: 'string', length:80},
+      fname: {type: 'string', length: 100},
+      lname: {type: 'string', length: 100},
+      contact: {type: 'int'},
+      email: {type: 'string'},
+      address: {type: 'string'},
+      postalCode: {type: 'int'}
   })
 };
 
 exports.down = function(db) {
   return db.dropTable('users')
 };
-
 exports._meta = {
   "version": 1
 };

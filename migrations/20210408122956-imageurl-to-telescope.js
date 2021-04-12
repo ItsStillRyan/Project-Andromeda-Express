@@ -15,10 +15,9 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.addColumn('telescopes', 'image_url', {
-      type:'string',
-      length:255
-  })
+  return db.addColumn('telescopes',
+   'image_url', {type:'string',length:255}
+   )
 };
 
 exports.down = function(db) {
