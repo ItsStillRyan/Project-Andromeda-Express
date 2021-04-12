@@ -1,0 +1,15 @@
+{{#extends 'base'}}
+{{#block 'content'}}
+<h1>Cart</h1>
+
+<ul>
+    {{#each shopCart}}
+    <li>
+        <h4>{{this.telescope.name}}</h4>
+        <h5>Cost:{{this.telescope.price}}</h5>
+        <h5>Quantity:{{this.quantity}}</h5>
+    </li>
+    {{/each}}
+</ul>
+{{/block}}
+{{/extends}}

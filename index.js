@@ -61,10 +61,12 @@ async function main() {
     const dashboardRoute = require('./routes/dashboard')
     const telescopeRoute = require('./routes/telescopes')
     const usersRoute = require('./routes/users')
+    const cartRoute = require('./routes/cart')
     
     app.use('/dashboard', dashboardRoute)
     app.use('/telescope', telescopeRoute)
     app.use('/users', usersRoute)
+    app.use('/cart', cartRoute)
 }
 
 main();

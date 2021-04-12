@@ -30,17 +30,8 @@ const Brand = bookshelf.model('Brand', {
 //USER RELATIONSHIPS
 const User = bookshelf.model('User', {
     tableName: 'users',
-    userdetails(){
-        return this.hasOne('UserDetails')
-    },
     carts(){
         return this.belongTo('Cart')
-    }
-})
-const UserDetails = bookshelf.model('UserDetails', {
-    tableName: 'userDetails',
-    user() {
-        return this.belongsTo('User')
     }
 })
 
@@ -48,10 +39,10 @@ const UserDetails = bookshelf.model('UserDetails', {
 const Order = bookshelf.model('Order', {
     tableName:'orders',
     status(){
-        return this.hasOne('Status')
+        return this.belongsTo('Status')
     },
     Shipping(){
-        return this.hasOne('Shipping')
+        return this.belongsTo('Shipping')
     },
     carts(){
         return this.hasOne('Cart')
@@ -60,13 +51,13 @@ const Order = bookshelf.model('Order', {
 const Status = bookshelf.model('Status', {
     tableName:'status',
     orders(){
-        return this.belongsTo('Order')
+        return this.hasMany('Order')
     }
 })
 const Shipping = bookshelf.model('Shipping', {
     tableName:'shipping',
     orders(){
-        return this.belongsTo('Order')     
+        return this.hasMany('Order')     
     }
 })
 
@@ -77,7 +68,7 @@ const Cart = bookshelf.model('Cart', {
         return this.hasOne('User')
     },
     telescope(){
-        return this.hasOne('Telescope')
+        return this.hasMany('Telescope')
     },
     orders(){
         return this.belongsTo('Order')
@@ -85,4 +76,4 @@ const Cart = bookshelf.model('Cart', {
     
 })
 
-module.exports = {Telescope, Category, Brand, User, UserDetails, Order, Status, Shipping, Cart}
+module.exports = {Telescope, Category, Brand, User, Order, Status, Shipping, Cart}

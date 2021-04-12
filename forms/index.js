@@ -121,9 +121,9 @@ const createTelescopeForm = (categories, brands) => {
         }),
         'image_url': fields.string({
             label: 'Image',
-            required:true,
+            required: true,
             errorAfterField: true,
-            cssClasses:{
+            cssClasses: {
                 label: ['form-label']
             },
             widget: widgets.hidden()
@@ -155,21 +155,8 @@ const createRegisterForm = () => {
             },
             validators: [validators.matchField('password')]
         }),
-        'userDetail_id': fields.number({
-            required: true,
-            errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            },
-
-        }),
-    })
-}
-
-const createRegister2Form = () => {
-    return forms.create({
         'fname': fields.string({
-            label:'First Name',
+            label: 'First Name',
             required: true,
             errorAfterField: true,
             cssClasses: {
@@ -177,7 +164,7 @@ const createRegister2Form = () => {
             }
         }),
         'lname': fields.string({
-            label:'Last Name',
+            label: 'Last Name',
             required: true,
             errorAfterField: true,
             cssClasses: {
@@ -216,6 +203,7 @@ const createRegister2Form = () => {
         }),
     })
 }
+
 
 const createLoginForm = () => {
     return forms.create({
@@ -284,4 +272,4 @@ const createSearchForm = (categories, brands) => {
     })
 }
 
-module.exports = { bootstrapField, createTelescopeForm, createRegisterForm, createRegister2Form, createLoginForm, createSearchForm }
+module.exports = { bootstrapField, createTelescopeForm, createRegisterForm, createLoginForm, createSearchForm }
