@@ -21,6 +21,10 @@ const getTeleId = async (telescope_id) => {
     })
 }
 
+const getAllTelescope = async () => {
+    return await Telescope.fetchAll()
+}
+
 module.exports = {
-    getAllCate, getAllBrands, getTeleId
+    getAllCate, getAllBrands, getTeleId, getAllTelescope
 }

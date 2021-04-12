@@ -36,7 +36,7 @@ app.use(function (req, res, next) {
 
 
 //GLOBAL MIDDLEWARE
-app.use(function(req,res,next){
+app.use(function (req, res, next) {
     res.locals.user = req.session.user
     next()
 })
@@ -44,13 +44,21 @@ app.use(function(req,res,next){
 
 //FORMS
 app.use(
-  express.urlencoded({
-    extended: false
-  })
+    express.urlencoded({
+        extended: false
+    })
 );
 
 //CSRF
-app.use(csrf())
+const csurfInstance = csrf();
+app.use(function (req, res, next) {
+  if (req.url === '/checkout/process_payment' || 
+      req.url.slice(0,5) == '/api/') {
+      return next()
+  }
+  csurfInstance(req, res, next)
+})
+
 app.use(function (req, res, next) {
     if (req.csrfToken) {
         res.locals.csrfToken = req.csrfToken();
@@ -58,20 +66,29 @@ app.use(function (req, res, next) {
     next();
 })
 
+//ROUTES
+const dashboardRoute = require('./routes/dashboard')
+const telescopeRoute = require('./routes/telescopes')
+const usersRoute = require('./routes/users')
+const cartRoute = require('./routes/cart')
+
+const api = {
+    'telescope': require('./routes/api/telescopes'),
+    // 'users': require('./routes/api/users')
+}
+
 async function main() {
-    const dashboardRoute = require('./routes/dashboard')
-    const telescopeRoute = require('./routes/telescopes')
-    const usersRoute = require('./routes/users')
-    const cartRoute = require('./routes/cart')
-    
+
     app.use('/dashboard', dashboardRoute)
     app.use('/telescope', telescopeRoute)
     app.use('/users', usersRoute)
     app.use('/cart', cartRoute)
+    app.use('/api/telescope', express.json(), api.telescope)
+    // app.use('/api/users', express.json(), api.users)
 }
 
 main();
 
 app.listen(3000, () => {
-  console.log("Server Active, Port 3000");
+    console.log("Server Active, Port 3000");
 });

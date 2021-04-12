@@ -10,7 +10,7 @@ const Telescope = bookshelf.model('Telescope', {
         return this.belongsTo('Brand')
     },
     carts(){
-        return this.belongsTo('Cart')
+        return this.hasMany('Cart')
     }
 
 })
@@ -31,7 +31,7 @@ const Brand = bookshelf.model('Brand', {
 const User = bookshelf.model('User', {
     tableName: 'users',
     carts(){
-        return this.belongTo('Cart')
+        return this.hasOne('Cart')
     }
 })
 
@@ -65,10 +65,10 @@ const Shipping = bookshelf.model('Shipping', {
 const Cart = bookshelf.model('Cart', {
     tableName: 'cart',
     user(){
-        return this.hasOne('User')
+        return this.belongsTo('User')
     },
     telescope(){
-        return this.hasMany('Telescope')
+        return this.belongsTo('Telescope')
     },
     orders(){
         return this.belongsTo('Order')

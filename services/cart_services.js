@@ -2,8 +2,14 @@ const {Cart} = require('../models')
 const cDal = require('../dal/cart')
 
 class CartService {
-    constructor(users_id){
-        this.users_id = users_id
+    constructor(user_id) {
+        this.users_id = user_id
+    }
+    
+
+    async getCart(){
+        const allItems = await cDal.getCart(this.users_id);
+        return allItems;
     }
 
     async addToCart(telescopeId, quantity) {
@@ -21,6 +27,25 @@ class CartService {
         }
         await cartItem.save()
         return cartItem
+    }
+
+    async remove(telescopeId) {
+        let cartItem = await cDal.getCartByUserAndProduct(this.users_id, telescopeId)
+        if (cartItem) {
+            await cartItem.destroy();
+            return true
+        }
+        return false
+    }
+
+    async setQuantity(telescopeId, newQuantity) {
+        console.log(telescopeId, newQuantity)
+        let cartItem = await cDal.getCartByUserAndProduct(this.users_id, telescopeId)
+        if (cartItem) {
+            await cartItem.save();
+            return cartItem
+        }
+        return null
     }
 }
 

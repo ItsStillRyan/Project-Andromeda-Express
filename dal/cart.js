@@ -5,7 +5,8 @@ const getCart = async (userId) => {
         'users_id' : userId
     }).fetch({
         require:false,
-        withRelated:['telescope','category']
+        withRelated: ['telescope', 'user']
+        
     })
 }
 
