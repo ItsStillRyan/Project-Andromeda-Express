@@ -38,15 +38,10 @@ class CartService {
         return false
     }
 
-    async setQuantity(telescopeId, newQuantity) {
-        console.log(telescopeId, newQuantity)
-        let cartItem = await cDal.getCartByUserAndProduct(this.users_id, telescopeId)
-        if (cartItem) {
-            await cartItem.save();
-            return cartItem
-        }
-        return null
+    async setQuantity(productId, newQuantity, quantity) {
+        return await cDal.setQuantity(this.users_id, productId, newQuantity, quantity)
     }
+
 }
 
 module.exports = CartService
