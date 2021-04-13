@@ -6,7 +6,7 @@ const cDal = require('../../dal/cart')
 
 //display cart
 router.get('/', async(req,res)=>{
-    let cart = new CartService(req.params.user_id)
+    let cart = new CartService(req.params.users_id)
     res.send(await cart.getCart())
 })
 

@@ -1,24 +1,28 @@
 {{#extends 'base'}}
 {{#block 'content'}}
 <h1>Cart</h1>
-
+<div>
+    <a href="/checkout" class="btn btn-success mb-4 mt-3">Checkout</a>
+</div>
 {{#each shopCart}}
+<input type="hidden" value="{{../csrfToken}}" name="_csrf">
+
+
 <img src={{this.telescope.image_url}} style="width: 400px;" />
+
 <ul class="list-group">
-
     <li class="list-group-item">
-
         <h4>{{this.telescope.name}}</h4>
         <h5>Cost:{{this.telescope.price}}</h5>
-        <form method="POST" action="cart/{{this.id}}/quantity/update">
-        <input type="hidden" value="{{../csrfToken}}" name="_csrf">
-        <h5>
-            Quantity:
-            <input type="text" name="newQuantity" value="{{this.quantity}}" style="width: 50px;"/>
-            <input type="hidden" name="quantity" value="{{this.quantity}}"/>
-            <input type="submit" value="Update" class="btn btn-success btn-sm"/>
-        </h5>
 
+
+        <form method="POST" action="/cart/{{this.id}}/quantity/update">
+            <input type="hidden" value="{{../csrfToken}}" name="_csrf" />
+            <h5>
+                Quantity: <input type="text" name="newQuantity" value="{{this.quantity}}" style="width:30px" />
+
+                <input type="submit" value="Update Quantity" class="btn btn-success btn-sm" />
+            </h5>
         </form>
         <div>
             <a href="/cart/{{this.telescope.id}}/remove" class="btn btn-warning">Remove</a>

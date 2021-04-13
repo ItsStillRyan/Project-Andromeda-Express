@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router()
-const flash = require('connect-flash')
 
 const CartService = require('../services/cart_services')
 const cDal = require('../dal/cart')
@@ -33,11 +32,11 @@ router.get('/:telescope_id/remove', async(req,res) => {
 })
 
 //update quant
-router.post('/:telescope_id/quantity/update', async(req,res) => {
+router.post('/:telescope_id/quantity/update', async(req,res)=>{
     let cart = new CartService(req.session.user.id)
-    await cart.setQuantity(req.params.telescope_id, req.body.newQuantity, req.body.quantity) 
+    await cart.setQuantity(req.params.telescope_id, req.body.newQuantity) 
     req.flash("success_messages", 'Quantity updated')
-    res.redirect('/cart')
+    res.redirect('/cart/')
 })
 
 module.exports = router;

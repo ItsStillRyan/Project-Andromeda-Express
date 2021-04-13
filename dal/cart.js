@@ -11,23 +11,16 @@ const getCart = async (userId) => {
 }
 
 const getCartByUserAndProduct = async (userId, telescopeId) => {
-    return await Cart.where({
+    const cartItem = await Cart.where({
         'users_id': userId,
         'telescope_id': telescopeId
     }).fetch({
         require: false,
+        withRelated: ['telescope', 'telescope.category']
     })
+    return cartItem
 }
 
-const setQuantity = async (userId, telescopeId, newQuantity ) =>{
-        console.log(userId, telescopeId, newQuantity)
-        let cartItem = await getCartByUserAndProduct(userId, telescopeId).then(t => { return t } )
-        // if (cartItem) {
-            cartItem.set("quantity", newQuantity)
-            await cartItem.save();
-            return cartItem
-        // }
-        // return null
-    }
 
-module.exports = {getCart, getCartByUserAndProduct, setQuantity}
+
+module.exports = {getCart, getCartByUserAndProduct}

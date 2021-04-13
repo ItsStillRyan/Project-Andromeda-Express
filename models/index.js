@@ -29,10 +29,7 @@ const Brand = bookshelf.model('Brand', {
 
 //USER RELATIONSHIPS
 const User = bookshelf.model('User', {
-    tableName: 'users',
-    carts(){
-        return this.hasOne('Cart')
-    }
+    tableName: 'users'
 })
 
 //ORDERS RELATIONSHIPS
