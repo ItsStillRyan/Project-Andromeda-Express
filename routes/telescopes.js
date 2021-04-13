@@ -108,7 +108,6 @@ router.post('/create', checkIfAuthenticated, async (req, res) => {
         'success': async (form) => {
             const telescope = new Telescope()
             telescope.set(form.data)
-            console.log(form.data)
             await telescope.save()
             req.flash("success_messages", `${telescope.get('name')} added into Store`)
             res.redirect('/telescope')

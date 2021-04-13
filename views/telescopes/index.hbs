@@ -73,9 +73,9 @@
     </div>
 </div>
 
-
+  {{#each telescopes}}
 <div style="margin-top: 5%;">
-    {{#each telescopes}}
+  
     <div class="card" style="width: 18rem;">
         <img class="card-img-top" src={{this.image_url}} alt="Card image cap">
         <div class="card-body">
@@ -89,7 +89,8 @@
             <a href="/cart/{{this.id}}/add" class="btn btn-success">Test Add</a>
         </div>
     </div>
-    {{/each}}
+  
 </div>
+  {{/each}}
 {{/block}}
 {{/extends}}
