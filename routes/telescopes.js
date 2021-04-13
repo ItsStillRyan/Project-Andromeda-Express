@@ -11,23 +11,15 @@ const { checkIfAuthenticated } = require('../middlewares')
 const dal = require('../dal/telescopes')
 
 // rendering full product list
-// router.get('/:telescope_id/detailed', checkIfAuthenticated, async (req, res) => {
-//     const telescopeId = req.params.telescope_id
-//     const telescope = await dal.getTeleId(telescopeId)
-//     const allCate = await dal.getAllCate()
-//     const allBrands = await dal.getAllBrands()
-
-
-//     const telescope = new Telescope()
-//     telescope.set(form.data)
-
-//     let telescopes = await Telescope.collection().fetch({
-//         withRelated: ['category', 'brand']
-//     })
-//     res.render('telescopes/detailed', {
-//         'telescopes': telescopes.toJSON(),
-//     })
-// })
+router.get('/:telescope_id/detailed', checkIfAuthenticated, async (req, res) => {
+    const telescopeId = req.params.telescope_id
+    const telescope = await dal.getTeleId(telescopeId)
+    const allCate = await dal.getAllCate()
+    const allBrands = await dal.getAllBrands()
+    res.render('telescopes/detailed', {
+        'telescopes': telescope.toJSON()
+    })
+})
 
 router.get('/', checkIfAuthenticated, async (req,res) => {
     const allCate = await dal.getAllCate()
@@ -55,7 +47,7 @@ router.get('/', checkIfAuthenticated, async (req,res) => {
         },
         'success': async (form) => {
             if (form.data.name) {
-                tele = tele.where('name', 'like', '%' + req.query.name + '%')
+                tele = tele.where('telescopes.name', 'like', '%' + req.query.name + '%')
             }
             if (form.data.min_stock) {
                 tele = tele.where('stock', '>=',req.query.min_stock)

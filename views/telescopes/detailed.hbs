@@ -1,9 +1,52 @@
 {{#extends 'base'}}
 {{#block 'content'}}
-<input type="hidden" name="_csrf" value="{{csrfToken}}"/>
 
-<img src="{{this.telescope.image_url}}" id="uploadcare" style="height: 400px;">
-<h1>{{this.telescope.name}}</h1>
-{{{form}}}
+
+<div class="container" style="margin-top:5%;">
+    <div class="row">
+        <div class="col-sm">
+            <img src="{{this.telescopes.image_url}}" style="height: 300px;">
+        </div>
+        <div class="col-sm">
+            <h3>{{this.telescopes.name}}</h3>
+            <p>{{this.telescopes.description}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin-top:2%;">
+    <div class="row">
+        <div class="col-sm">
+            <ul>
+                <li>Category: {{this.telescopes.category.name}}</li>
+                <li>Brand: {{this.telescopes.brand.name}}</li>
+                <li>Stock: {{this.telescopes.stock}}</li>
+                <li>Price: {{this.telescopes.price}}</li>
+                <li>Weight: {{this.telescopes.weight}}</li>
+            </ul>
+        </div>
+        <div class="col-sm">
+            <ul>
+                <li>User Level: {{this.telescopes.userLevel}}</li>
+                <li>Optical Design: {{this.telescopes.opticalDesign}}</li>
+                <li>Aperture Range: {{this.telescopes.apertureRange}}</li>
+                <li>f/Ratio: {{this.telescopes.fratioRange}}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container" style="margin-top:2%;">
+    <div class="row">
+        <div class="col-sm" >
+            <a href="/telescope/{{this.telescopes.id}}/update" class="btn btn-primary m-3">Update</a>
+            <a href="/telescope/{{this.telescopes.id}}/delete" class="btn btn-danger m-3">Delete</a>
+            <a href="/telescope" class="btn btn-warning m-3">Back</a>
+        </div>
+    </div>
+</div>
+
+
+
+
 {{/block}}
 {{/extends}}

@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    
+    <link rel="stylesheet" href="../../main.css" />
+
     {{#block 'css'}}
     {{/block}}
     <title>Admin Console</title>
@@ -45,11 +46,11 @@
                         <a class="dropdown-item" href="#">Bundles</a>
                         {{!-- <div class="dropdown-divider"></div> --}}
                     </div>
-                </li> 
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Orders</a>
                 </li>
-                
+
                 {{!-- <li class="nav-item">
                     <a class="nav-link disabled" href="#">Disabled</a>
                 </li>--}}
@@ -62,26 +63,26 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/cart"><i class="fas fa-shopping-cart"></i></a>
                 </li>
-                    {{#if user}}
-                    <li class="nav-item">
+                {{#if user}}
+                <li class="nav-item">
                     <span class="nav-link" style="color: white; font-size:1.3em"> Hi, {{user.username}}</span>
-                    </li>
-                    <li class="nav-item">
-                    <a href="/users/logout" class="nav-link">Log out</a>
-                    </li>
-                    {{else}}
-                    <li class="nav-item">
-                    <a href="users/login" class"nav-link">Log In</a>
-                    </li>
-                    {{/if}}
                 </li>
-                
+                <li class="nav-item">
+                    <a href="/users/logout" class="nav-link">Log out</a>
+                </li>
+                {{else}}
+                <li class="nav-item">
+                    <a href="users/login" class"nav-link">Log In</a>
+                </li>
+                {{/if}}
+                </li>
+
             </ul>
 
-            
+
         </div>
     </nav>
-    
+
 
 
     {{#if success_messages}}

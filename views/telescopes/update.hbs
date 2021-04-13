@@ -3,12 +3,22 @@
 {{!-- <img src="{{this.telescope.image_url}}" id="uploadcare" style="height: 400px;"> --}}
 
 <form method="POST">
-    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+    <img src={{this.telescope.image_url}} style="height: 300px;">
+
+    <input type="hidden" name="_csrf" value="{{csrfToken}}" />
 
     {{{form}}}
-    <input type="submit" value="Update Telescope Listing" class="btn btn-primary"/>
-    <input type="hidden" role="uploadcare-uploader" id="uploadcare" value="" />
-    
+    <div >
+        <input type="hidden" role="uploadcare-uploader" id="uploadcare" value="" />
+    </div>
+    <div style="margin-top: 3%;">
+        <input type="submit" value="Update Telescope Listing" class="btn btn-primary" id="create" />
+        <a href="/telescope" class="btn btn-warning">Back</a>
+    </div>
+
+
+
+
 </form>
 {{/block}}
 {{/extends}}
@@ -18,10 +28,16 @@
 <script>
     UPLOADCARE_PUBLIC_KEY = '183eee4d9cd149ef9e70';
 
-    document.querySelector("#create").addEventListener("click", () => {
-        document.querySelector("#id_image_url").value = document.querySelector("#uploadcare").value
 
+    document.querySelector("#create").addEventListener("click", () => {
+        if (document.querySelector("#uploadcare").value != document.querySelector("#id_image_url").value
+            && document.querySelector("#uploadcare").value != "") {
+            document.querySelector("#id_image_url").value = document.querySelector("#uploadcare").value
+        } else {
+            document.querySelector("#id_image_url").value = document.querySelector("#id_image_url").value
+        }
     })
+
 </script>
 
 <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
