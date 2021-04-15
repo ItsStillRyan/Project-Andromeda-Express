@@ -1,0 +1,38 @@
+{{#extends 'base'}}
+{{#block 'content'}}
+
+<table class="table">
+    <thread>
+        <tr>
+            <th>Id</th>
+            <th>Order Number</th>
+            <th>Order Date</th>
+            <th>Status</th>
+            <th>Shipping Company</th>
+            <th>Cart id</th>
+        </tr>
+    </thread>
+    <tbody>
+        {{#each shopOrders}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.orderNumber}}</td>
+            <td>{{this.orderDate}}</td>
+            <td>{{this.status.name}}</td>
+            <td>{{this.shipping.name}}</td>
+            <td>{{this.cart_id}}</td>
+ 
+            <td>
+                <a href="/telescope/{{this.id}}/update" class="btn btn-warning">Update</a>
+            </td>
+            <td>
+                <a href="/telescope/{{this.id}}/delete" class="btn btn-danger">Delete</a>
+            </td>
+
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{/block}}
+{{/extends}}
