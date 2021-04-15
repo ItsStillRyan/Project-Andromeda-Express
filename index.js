@@ -5,6 +5,7 @@ require("dotenv").config();
 const session = require('express-session')
 const flash = require('connect-flash')
 const csrf = require('csurf')
+const cors = require('cors')
 
 // create an instance of express app
 let app = express();
@@ -18,6 +19,9 @@ app.use(express.static("public"));
 // setup wax-on
 wax.on(hbs.handlebars);
 wax.setLayoutPath("./views/layouts");
+
+//CORS
+app.use(cors())
 
 //SESSIONS
 app.use(session({
