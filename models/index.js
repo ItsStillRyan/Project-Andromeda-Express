@@ -42,7 +42,7 @@ const Order = bookshelf.model('Order', {
         return this.belongsTo('Shipping')
     },
     carts(){
-        return this.hasOne('Cart')
+        return this.belongsTo('Cart')
     }
 })
 const Status = bookshelf.model('Status', {
@@ -68,7 +68,7 @@ const Cart = bookshelf.model('Cart', {
         return this.belongsTo('Telescope')
     },
     orders(){
-        return this.belongsTo('Order')
+        return this.hasOne('Order')
     }
     
 })

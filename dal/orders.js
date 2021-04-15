@@ -23,7 +23,9 @@ const getOrdersviaId = async (orders_id) => {
 }
 
 const getAllOrders = async () => {
-    return await Order.fetchAll()
+    return await Order.fetchAll({
+        withRelated: ['status', 'shipping', 'carts']
+    })
 }
 
 module.exports = {

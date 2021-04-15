@@ -274,14 +274,6 @@ const createSearchForm = (categories, brands) => {
 
 const createOrdersForm = (shipping, status) => {
     return forms.create({
-        'orderNumber': fields.number({
-            label: 'Order Number',
-            errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            },
-            'validators': [validators.integer()]
-        }),
         'orderDate': fields.date({
             label: 'Order Date',
             errorAfterField: true,
@@ -323,10 +315,27 @@ const createOrdersForm = (shipping, status) => {
     })
 }
 
+const updateStatusForm = (status) => {
+    return forms.create({
+        'status_id': fields.number({
+            label: 'Status',
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: status,
+            'validators': [validators.integer()]
+        }),
+    })
+}
+
 module.exports = { 
     bootstrapField, 
     createTelescopeForm, 
     createRegisterForm, 
     createLoginForm, 
     createSearchForm,
-    createOrdersForm }
+    createOrdersForm,
+    updateStatusForm
+}
