@@ -38,7 +38,7 @@ const Order = bookshelf.model('Order', {
     status(){
         return this.belongsTo('Status')
     },
-    Shipping(){
+    shipping(){
         return this.belongsTo('Shipping')
     },
     carts(){

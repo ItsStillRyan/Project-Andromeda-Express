@@ -12,7 +12,7 @@ router.get('/', async(req,res)=>{
     res.send(await pDal.getAllTelescope())
 })
 
-//FOR TESTING PURPOSES
+//ADMIN
 // router.post('/create', async (req, res) => {
 //     const allCate = await pDal.getAllCate()
 //     const allBrands = await pDal.getAllBrands()
@@ -36,5 +36,9 @@ router.get('/', async(req,res)=>{
 //         }
 //     })
 // })
+
+//
+
+
 
 module.exports = router;

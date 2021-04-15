@@ -2,7 +2,7 @@
 {{#block 'content'}}
 <h1>Cart</h1>
 <div>
-    <a href="/checkout" class="btn btn-success mb-4 mt-3">Checkout</a>
+    <a href="/orders/createOrder/{{this.id}}" class="btn btn-success mb-4 mt-3">Checkout</a>
 </div>
 {{#each shopCart}}
 <input type="hidden" value="{{../csrfToken}}" name="_csrf">

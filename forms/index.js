@@ -272,4 +272,61 @@ const createSearchForm = (categories, brands) => {
     })
 }
 
-module.exports = { bootstrapField, createTelescopeForm, createRegisterForm, createLoginForm, createSearchForm }
+const createOrdersForm = (shipping, status) => {
+    return forms.create({
+        'orderNumber': fields.number({
+            label: 'Order Number',
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            'validators': [validators.integer()]
+        }),
+        'orderDate': fields.date({
+            label: 'Order Date',
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.date(),
+            'validators': [validators.date()]
+        }),
+        'status_id': fields.number({
+            label: 'Status',
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: status,
+            'validators': [validators.integer()]
+        }),
+        'shipping_id': fields.number({
+            label: 'Shipping company',
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: shipping,
+            'validators': [validators.integer()]
+        }),
+        'cart_id': fields.number({
+            label: 'Cart number',
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            'validators': [validators.integer()]
+        })
+
+    })
+}
+
+module.exports = { 
+    bootstrapField, 
+    createTelescopeForm, 
+    createRegisterForm, 
+    createLoginForm, 
+    createSearchForm,
+    createOrdersForm }
