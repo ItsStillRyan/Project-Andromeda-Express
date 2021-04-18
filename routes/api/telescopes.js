@@ -12,6 +12,15 @@ router.get('/', async(req,res)=>{
     res.send(await pDal.getAllTelescope())
 })
 
+//GETTING DETAILED
+router.get('/:telescope_id/detailed', async(req,res) => {
+    const telescopeId = req.params.telescope_id
+    const telescope = await pDal.getTeleId(telescopeId)
+    res.send(telescope)
+})
+
+
+
 //ADMIN
 // router.post('/create', async (req, res) => {
 //     const allCate = await pDal.getAllCate()

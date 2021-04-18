@@ -11,7 +11,6 @@ router.get('/createOrder', async (req,res) => {
     // orderId = req.session.cart.id
     const allStatus = await oDal.getAllStatus()
     const allShipping = await oDal.getAllShipping()
-    // const order = await oDal.getOrdersviaId(orderId)
     const orderForm = createOrdersForm(allShipping, allStatus)
     
     res.render('orders/create', {
