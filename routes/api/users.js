@@ -38,7 +38,7 @@ const getHashedPassword = (password) => {
 //START OF ROUTER
 
 //DISPLAY PROFILE
-router.get('/profile', checkIfAuthenticatedJWT, async (req, res) => {
+router.get('/profile/:id', checkIfAuthenticatedJWT, async (req, res) => {
     const user = req.user
     res.send(user)
 })
@@ -73,7 +73,6 @@ router.post('/register', (req, res) => {
     })
 })
 
-
 //LOGIN
 router.post('/login', async (req, res) => {
     let user = await User.where({
@@ -85,8 +84,9 @@ router.post('/login', async (req, res) => {
     if (user && user.get('password') == getHashedPassword(req.body.password)) {
         let accessToken = generateAccessToken(user, process.env.TOKEN_SECRET, '15m')
         let refreshToken = generateAccessToken(user, process.env.REFRESH_TOKEN_SECRET, '7d')
+        let id = user.get("id")
         res.send({
-            accessToken, refreshToken
+            accessToken, refreshToken, id
         })
     } else {
         res.send({

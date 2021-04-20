@@ -21,6 +21,11 @@ const getCartByUserAndProduct = async (userId, telescopeId) => {
     return cartItem
 }
 
+const getCartbyUser = async (userId) => {
+    return await Cart.where({
+        'users_id':userId
+    })
+}
 
 
-module.exports = {getCart, getCartByUserAndProduct}
+module.exports = {getCart, getCartByUserAndProduct, getCartbyUser}

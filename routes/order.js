@@ -8,11 +8,14 @@ const {createOrdersForm, updateStatusForm, bootstrapField} = require('../forms')
 
 
 router.get('/createOrder', async (req,res) => {
-    // orderId = req.session.cart.id
+    const user = req.session.user.id
     const allStatus = await oDal.getAllStatus()
     const allShipping = await oDal.getAllShipping()
     const orderForm = createOrdersForm(allShipping, allStatus)
-    
+    console.log(user)
+    orderForm.fields.orderDate.value = new Date()
+    orderForm.fields.users_id.value = user
+
     res.render('orders/create', {
         'form': orderForm.toHTML(bootstrapField)
     })

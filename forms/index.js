@@ -303,8 +303,8 @@ const createOrdersForm = (shipping, status) => {
             choices: shipping,
             'validators': [validators.integer()]
         }),
-        'cart_id': fields.number({
-            label: 'Cart number',
+        'users_id': fields.number({
+            label: 'User Id',
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']

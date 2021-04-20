@@ -81,7 +81,8 @@ const ordersRoute = require('./routes/order')
 const api = {
     'telescope': require('./routes/api/telescopes'),
     'cart': require('./routes/api/cart'),
-    'user': require('./routes/api/users')
+    'user': require('./routes/api/users'),
+    'order': require('./routes/api/orders')
 }
 
 async function main() {
@@ -95,6 +96,7 @@ async function main() {
     app.use('/api/telescope', express.json(), api.telescope)
     app.use('/api/cart', express.json(), api.cart)
     app.use('/api/users', express.json(), api.user)
+    app.use('/api/order', express.json(), api.order)
 }
 
 main();
