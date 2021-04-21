@@ -42,7 +42,6 @@ class CartService {
     async setQuantity(telescopeId, newQuantity){
         console.log(telescopeId, newQuantity)
         let cartItem = await cDal.getCartByUserAndProduct(this.users_id, telescopeId)
-        console.log(await cDal.getCartByUserAndProduct(this.users_id, telescopeId))
         if (cartItem) {
             cartItem.set("quantity", newQuantity)
             await cartItem.save();
