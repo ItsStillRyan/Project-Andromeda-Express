@@ -13,7 +13,10 @@ router.get('/:users_id', async(req,res)=>{
 //add to cart
 router.get('/:users_id/:telescope_id/add', async (req,res) => {
     let cart = new CartService(req.params.users_id)
-    res.send(await cart.addToCart(req.params.telescope_id, 1))
+    let userCart = await cart.addToCart(req.params.telescope_id, 1)
+    let confirmCart = await cart.addToCartConfirm(req.params.telescope_id, 1)
+    res.send(userCart + confirmCart)
+
 })
 
 

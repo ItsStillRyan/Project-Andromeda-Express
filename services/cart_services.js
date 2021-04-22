@@ -1,4 +1,4 @@
-const {Cart} = require('../models')
+const {Cart, CartConfirm} = require('../models')
 const cDal = require('../dal/cart')
 
 class CartService {
@@ -18,6 +18,23 @@ class CartService {
 
         if(!cartItem) {
             cartItem = new Cart({
+                'users_id': this.users_id,
+                'telescope_id': telescopeId,
+                'quantity': quantity
+            })
+        }else{
+            cartItem.set('quantity', cartItem.get('quantity') + quantity)
+        }
+        await cartItem.save()
+        return cartItem
+    }
+
+    async addToCartConfirm(telescopeId, quantity) {
+
+        let cartItem = await cDal.getCartByUserAndProduct2(this.users_id, telescopeId)
+
+        if(!cartItem) {
+            cartItem = new CartConfirm({
                 'users_id': this.users_id,
                 'telescope_id': telescopeId,
                 'quantity': quantity

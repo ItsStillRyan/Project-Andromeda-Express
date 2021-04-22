@@ -1,4 +1,4 @@
-const {Cart} = require('../models')
+const {Cart, CartConfirm} = require('../models')
 
 const getCart = async (userId) => {
     return await Cart.collection().where({
@@ -21,6 +21,17 @@ const getCartByUserAndProduct = async (userId, telescopeId) => {
     return cartItem
 }
 
+const getCartByUserAndProduct2 = async (userId, telescopeId) => {
+    const cartItem = await CartConfirm.where({
+        'users_id': userId,
+        'telescope_id': telescopeId
+    }).fetch({
+        require: false,
+        withRelated: ['telescope', 'telescope.category']
+    })
+    return cartItem
+}
+
 const getCartbyUser = async (userId) => {
     return await Cart.where({
         'users_id':userId
@@ -28,4 +39,4 @@ const getCartbyUser = async (userId) => {
 }
 
 
-module.exports = {getCart, getCartByUserAndProduct, getCartbyUser}
+module.exports = {getCart, getCartByUserAndProduct, getCartbyUser, getCartByUserAndProduct2}

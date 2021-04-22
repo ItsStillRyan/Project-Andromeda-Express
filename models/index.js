@@ -78,4 +78,8 @@ const BlacklistedToken = bookshelf.model('BlacklistedToken', {
     tableName: 'blacklisted_token'
 })
 
-module.exports = {Telescope, Category, Brand, User, Order, Status, Shipping, Cart, BlacklistedToken}
+//CART CONFIRM DUPE
+const CartConfirm = bookshelf.model('CartOrder', {
+    tableName: 'cart-confirm'
+})
+module.exports = {Telescope, Category, Brand, User, Order, Status, Shipping, Cart, BlacklistedToken, CartConfirm}
