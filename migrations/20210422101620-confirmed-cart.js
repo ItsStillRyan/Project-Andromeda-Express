@@ -15,7 +15,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function (db) {
-    return db.createTable('cart-confirm', {
+    return db.createTable('cartConfirm', {
         id: {
             type: 'int',
             unsigned: true,

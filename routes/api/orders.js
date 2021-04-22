@@ -43,6 +43,9 @@ router.get ('/:users_id', async (req,res) => {
     res.send(order)
 })
 
+//GET SHIPPING
+
+
 
 
 module.exports = router;

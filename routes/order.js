@@ -26,13 +26,6 @@ router.post('/createOrder', async (req,res)=> {
     const allShipping = await oDal.getAllShipping()
 
     const orderForm = createOrdersForm(allShipping, allStatus)
-
-    // orderForm.handle(req, {
-    //     'success': async (form) => {
-    //         const order = new Order()
-    //         order.set('',form.data.orderNumber)
-    //     }
-    // })
 })
 
 //DISPLAY ALL ORDERS

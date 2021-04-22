@@ -82,7 +82,7 @@ router.post('/login', async (req, res) => {
     })
 
     if (user && user.get('password') == getHashedPassword(req.body.password)) {
-        let accessToken = generateAccessToken(user, process.env.TOKEN_SECRET, '15m')
+        let accessToken = generateAccessToken(user, process.env.TOKEN_SECRET, '30m')
         let refreshToken = generateAccessToken(user, process.env.REFRESH_TOKEN_SECRET, '7d')
         let id = user.get("id")
         res.send({
@@ -102,20 +102,15 @@ router.post('/refresh', async (req, res) => {
     if (!refreshToken) {
         res.sendStatus(401)
     }
-
     let blacklistedToken = await BlacklistedToken.where({
         'token': refreshToken
     }).fetch({
         require: false
     })
-
     if (blacklistedToken) {
         res.status(401)
         return res.send('Refresh Token expired')
     }
-
-
-
 
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, user) => {
         if (err) {
@@ -125,11 +120,10 @@ router.post('/refresh', async (req, res) => {
         res.send({
             accessToken
         })
-
     })
-
-
 })
+
+
 
 //Logout
 router.post('/logout', async (req, res) => {

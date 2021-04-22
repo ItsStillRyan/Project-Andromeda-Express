@@ -12,6 +12,8 @@ class CartService {
         return allItems;
     }
 
+   
+
     async addToCart(telescopeId, quantity) {
 
         let cartItem = await cDal.getCartByUserAndProduct(this.users_id, telescopeId)
@@ -52,6 +54,23 @@ class CartService {
             await cartItem.destroy();
             return true
         }
+        return false
+    }
+    async removeConfirm(telescopeId) {
+        let cartItem = await cDal.getCartByUserAndProduct2(this.users_id, telescopeId)
+        if (cartItem) {
+            await cartItem.destroy();
+            return true
+        }
+        return false
+    }
+
+     async removeAllFromCart(){
+        const allItems = await cDal.getCart(this.users_id);
+        if (allItems){
+            await allItems.destroyAll()
+            return true
+        };
         return false
     }
 

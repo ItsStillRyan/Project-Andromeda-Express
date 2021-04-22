@@ -4,7 +4,7 @@ const router = express.Router()
 const CartService = require('../../services/cart_services')
 const Stripe = require('stripe')(process.env.STRIPE_KEY_SECRET)
 
-router.get('/', async (req, res) => {
+router.get('/:users_id', async (req, res) => {
     const cart = new CartService(req.params.users_id)
 
     let items = await cart.getCart()
