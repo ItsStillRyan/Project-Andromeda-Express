@@ -28,6 +28,12 @@ router.get('/:users_id/:telescope_id/remove', async(req,res) => {
     res.sendStatus(200)
 })
 
+router.get('/:users_id/:telescope_id/removeMain', async(req,res) => {
+    let cart = new CartService(req.params.users_id)
+    let userCart = await cart.remove(req.params.telescope_id)
+    res.sendStatus(200)
+})
+
 //update quant
 router.post('/:users_id/:telescope_id/quantity/update', async(req,res) => {
     let cart = new CartService(req.params.users_id)

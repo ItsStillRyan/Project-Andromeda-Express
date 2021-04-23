@@ -16,8 +16,8 @@ const generateAccessToken = (user, secret, expiresIn) => {
     return jwt.sign({
         'username': user.get('username'),
         'id': user.get('id'),
-        'first name': user.get('fname'),
-        'last name': user.get('lname'),
+        'fname': user.get('fname'),
+        'lname': user.get('lname'),
         'contact': user.get('contact'),
         'email': user.get('email'),
         'address': user.get('address'),

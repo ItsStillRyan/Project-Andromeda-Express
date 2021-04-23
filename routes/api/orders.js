@@ -37,6 +37,30 @@ router.post('/createOrder', async (req, res) => {
     })
 })
 
+//UPDATE STATUS
+router.post('/:order_id/status', async (req,res) => {
+    const order = await oDal.getOrdersviaId(req.params.order_id)
+    const allStatus = await oDal.getAllStatus()
+    const updateForm = updateStatusForm(allStatus)
+
+    updateForm.handle(req, {
+        'success': async (form) => {
+            order.set(form.data)
+            await order.save()
+            res.send(order)
+        },
+        'error': async (form) => {
+            let errors = {}
+            for (let key in form.fields) {
+                if (form.fields[key].error) {
+                    errors[key] = form.fields[key].error
+                }
+            }
+            res.send(JSON.stringify(errors))
+        }
+    })
+})
+
 //GET ALL ORDERS ASSOSCIATED WITH USERID
 router.get ('/:users_id', async (req,res) => {
     let order = await oDal.getOrdersviaUserId(req.params.users_id)

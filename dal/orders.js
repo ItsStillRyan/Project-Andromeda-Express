@@ -35,7 +35,7 @@ const getCartItemsviaID = async (userId) => {
 }
 
 const getOrdersviaUserId = async (userId) => {
-    return await Order.where({
+    return await Order.collection().where({
         'users_id': userId
     }).fetch({
         require: true,
