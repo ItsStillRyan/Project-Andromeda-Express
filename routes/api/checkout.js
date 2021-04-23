@@ -14,7 +14,7 @@ router.get('/:users_id', async (req, res) => {
     for (let item of items) {
         const lineItem = {
             'name': item.related('telescope').get('name'),
-            'amount': item.related('telescope').get('price'),
+            'amount': (item.related('telescope').get('price')* 100),
             'quantity': item.get('quantity'),
             'currency': 'SGD'
         }
