@@ -1,9 +1,9 @@
 const {Cart, CartConfirm} = require('../models')
 
 const getCart = async (userId) => {
-    return await Cart.collection().where({
+    return await Cart.where({
         'users_id' : userId
-    }).fetch({
+    }).fetchAll({
         require:false,
         withRelated: ['telescope', 'user']
         

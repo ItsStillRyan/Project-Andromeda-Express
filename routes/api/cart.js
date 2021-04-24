@@ -30,7 +30,7 @@ router.get('/:users_id/:telescope_id/remove', async(req,res) => {
 
 router.get('/:users_id/:telescope_id/removeMain', async(req,res) => {
     let cart = new CartService(req.params.users_id)
-    let userCart = await cart.remove(req.params.telescope_id)
+    let userCart = await cart.remove()
     res.sendStatus(200)
 })
 
