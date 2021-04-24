@@ -6,13 +6,10 @@ class CartService {
         this.users_id = user_id
     }
 
-
     async getCart() {
         const allItems = await cDal.getCart(this.users_id);
         return allItems;
     }
-
-
 
     async addToCart(telescopeId, quantity) {
 
@@ -64,8 +61,6 @@ class CartService {
         }
         return false
     }
-
-
 
     async setQuantity(telescopeId, newQuantity) {
         console.log(telescopeId, newQuantity)

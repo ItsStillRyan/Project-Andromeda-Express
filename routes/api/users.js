@@ -9,6 +9,10 @@ const { createRegisterForm } = require('../../forms')
 
 const { checkIfAuthenticatedJWT } = require('../../middlewares')
 
+const UserService = require('../../services/user_service')
+
+const uDal = require('../../dal/users')
+
 //TOKEN GEN
 
 
@@ -38,7 +42,7 @@ const getHashedPassword = (password) => {
 //START OF ROUTER
 
 //DISPLAY PROFILE
-router.get('/profile/:id', checkIfAuthenticatedJWT, async (req, res) => {
+router.get('/profile/:users_id', checkIfAuthenticatedJWT, async (req, res) => {
     const user = req.user
     res.send(user)
 })
@@ -82,7 +86,7 @@ router.post('/login', async (req, res) => {
     })
 
     if (user && user.get('password') == getHashedPassword(req.body.password)) {
-        let accessToken = generateAccessToken(user, process.env.TOKEN_SECRET, '30m')
+        let accessToken = generateAccessToken(user, process.env.TOKEN_SECRET, '15m')
         let refreshToken = generateAccessToken(user, process.env.REFRESH_TOKEN_SECRET, '7d')
         let id = user.get("id")
         res.send({
@@ -123,7 +127,42 @@ router.post('/refresh', async (req, res) => {
     })
 })
 
+//UPDATE USERS PROFILE
+router.post('/:users_id/update', async (req, res) => {
+    let user = await User.where({
+        'id': req.params.users_id
+    }).fetch({
+        require: false
+    })
 
+    const registerForm = createRegisterForm()
+
+    registerForm.handle(req, {
+        'success': async (form) => {
+            user.set({
+                'username': form.data.username,
+                'password': getHashedPassword(form.data.password),
+                'fname': form.data.fname,
+                'lname': form.data.lname,
+                'contact': form.data.contact,
+                'email': form.data.email,
+                'address': form.data.address,
+                'postalCode': form.data.postalCode,
+            })
+            await user.save()
+            res.send(user)
+        },
+        'error': async (form) => {
+            let errors = {}
+            for (let key in form.fields) {
+                if (form.fields[key].error) {
+                    errors[key] = form.fields[key].error
+                }
+            }
+            res.send(JSON.stringify(errors))
+        }
+    })
+})
 
 //Logout
 router.post('/logout', async (req, res) => {
