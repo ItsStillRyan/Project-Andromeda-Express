@@ -3,9 +3,19 @@
 <form method="POST">
     <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
 
-    {{{form}}}
-    <input type="submit" class="btn btn-primary" value="Login"/>
-    <a class="btn btn-info" href="/users/register">Register<a>
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-5 login-section">
+                {{{form}}}
+                <input type="submit" class="btn btn-primary" value="Login"/>
+            </div>
+            
+        </div>
+    </div>
+
+    
+    
 </form>
 {{/block}}
 {{/extends}}

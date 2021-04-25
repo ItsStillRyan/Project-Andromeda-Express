@@ -87,8 +87,8 @@ const api = {
 }
 
 async function main() {
-
-    app.use('/dashboard', dashboardRoute)
+    
+    app.use('/', dashboardRoute)
     app.use('/telescope', telescopeRoute)
     app.use('/users', usersRoute)
     app.use('/cart', cartRoute)

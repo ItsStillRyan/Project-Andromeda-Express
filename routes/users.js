@@ -65,10 +65,10 @@ router.post('/login', (req, res) => {
                 require: false
             })
 
-            if (!user) {
-                req.flash("error_messages", 'Username or Password Invalid.')
+            if (user.get('username') != "admin") {
+                req.flash("error_messages", 'Username or Password Invalid. Only administrators allowed.')
                 res.redirect('/users/login')
-            } else {
+            } else{
                 if (user.get('password') === getHashedPassword(form.data.password)) {
                     req.session.user = {
                         id: user.get('id'),

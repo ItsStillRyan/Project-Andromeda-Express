@@ -8,7 +8,8 @@
             <th>Order Date</th>
             <th>Status</th>
             <th>Shipping Company</th>
-            <th>Cart id</th>
+            <th>User id</th>
+            <th></th>
         </tr>
     </thread>
     <tbody>
@@ -18,9 +19,7 @@
             <td>{{this.orderDate}}</td>
             <td>{{this.status.name}}</td>
             <td>{{this.shipping.name}}</td>
-            <td>{{this.cart_id}}</td>
-            
- 
+            <td>{{this.users_id}}</td>
             <td>
                 <a href="orders/{{this.id}}/status" class="btn btn-warning">Update</a>
             </td>
