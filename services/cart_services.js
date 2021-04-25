@@ -45,8 +45,8 @@ class CartService {
         return cartItem
     }
 
-    async remove() {
-        let cartItem = await cDal.getCart(this.users_id)
+    async remove(telescopeId) {
+        let cartItem = await cDal.getCartByUserAndProduct(this.users_id, telescopeId)
         if (cartItem) {
             await cartItem.destroy();
             return true

@@ -14,11 +14,15 @@ router.get('/:users_id', async(req,res)=>{
 router.get('/:users_id/:telescope_id/add', async (req,res) => {
     let cart = new CartService(req.params.users_id)
     let userCart = await cart.addToCart(req.params.telescope_id, 1)
-    let confirmCart = await cart.addToCartConfirm(req.params.telescope_id, 1)
-    res.send(userCart + confirmCart)
-
+    res.send(userCart)
 })
 
+//add to confirmcart
+router.get('/:users_id/:telescope_id/add2', async (req,res) => {
+    let cart = new CartService(req.params.users_id)
+    let confirmCart = await cart.addToCartConfirm(req.params.telescope_id, 1)
+    res.send(confirmCart)
+})
 
 //delete
 router.get('/:users_id/:telescope_id/remove', async(req,res) => {
@@ -30,8 +34,7 @@ router.get('/:users_id/:telescope_id/remove', async(req,res) => {
 
 router.get('/:users_id/:telescope_id/removeMain', async(req,res) => {
     let cart = new CartService(req.params.users_id)
-    let userCart = await cart.remove()
-    res.sendStatus(200)
+    res.send(await cart.remove(req.params.telescope_id))
 })
 
 //update quant
