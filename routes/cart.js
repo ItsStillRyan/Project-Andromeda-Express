@@ -3,9 +3,9 @@ const router = express.Router()
 
 const CartService = require('../services/cart_services')
 const cDal = require('../dal/cart')
-
+const { checkIfAuthenticated } = require('../middlewares')
 //display cart
-router.get('/', async(req,res)=>{
+router.get('/',checkIfAuthenticated, async(req,res)=>{
     let cart = new CartService(req.session.user.id)
     const allItems = await cart.getCart();
     res.render('cart/index', {
@@ -15,7 +15,7 @@ router.get('/', async(req,res)=>{
 
 
 //add to cart
-router.get('/:telescope_id/add', async (req,res) => {
+router.get('/:telescope_id/add',checkIfAuthenticated,  async (req,res) => {
     let cart = new CartService(req.session.user.id)
     await cart.addToCart(req.params.telescope_id, 1)
     req.flash("success_messages", 'Added to cart')
@@ -24,7 +24,7 @@ router.get('/:telescope_id/add', async (req,res) => {
 
 
 //delete
-router.get('/:telescope_id/remove', async(req,res) => {
+router.get('/:telescope_id/remove',checkIfAuthenticated,  async(req,res) => {
     let cart = new CartService(req.session.user.id)
     await cart.remove(req.params.telescope_id) 
     req.flash("success_messages", 'Removed to cart')

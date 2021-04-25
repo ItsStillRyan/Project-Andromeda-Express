@@ -272,6 +272,33 @@ const createSearchForm = (categories, brands) => {
     })
 }
 
+const createOrderSearchForm = (status, shipping) => {
+    return forms.create({
+        'status': fields.string({
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: status
+        }),
+        'shipping_company': fields.string({
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: shipping
+        }),
+        'userid': fields.number({
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        })
+    })
+}
+
 const createOrdersForm = (shipping, status) => {
     return forms.create({
         'orderDate': fields.date({
@@ -337,5 +364,6 @@ module.exports = {
     createLoginForm, 
     createSearchForm,
     createOrdersForm,
-    updateStatusForm
+    updateStatusForm,
+    createOrderSearchForm
 }
